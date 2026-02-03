@@ -31,16 +31,6 @@ const nextConfig: NextConfig = {
   //       : false,
   // },
 
-  /** THIS FOR APPLE APP SITE ASSOCIATION */
-  async headers() {
-    return [
-      {
-        source: "/.well-known/apple-app-site-association",
-        headers: [{ key: "content-type", value: "application/json" }],
-      },
-    ];
-  },
-
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
@@ -65,31 +55,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     //unoptimized: true, // TODO: Remove this after testing
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "s3-alpha-sig.figma.com",
-        port: "",
-        pathname: "/img/**",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        port: "",
-        //pathname: "/img/**",
-      },
-      {
-        protocol: "https",
-        hostname: "assets.aqar.fm",
-        port: "",
-      },
-      {
-        protocol: "https",
-        hostname: "videos.pexels.com",
-        port: "",
-        pathname: "/video-files/**",
-      },
-    ],
+    remotePatterns: [],
   },
 };
 
