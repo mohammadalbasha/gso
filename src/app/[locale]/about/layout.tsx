@@ -39,9 +39,5 @@ export default async function AboutUsLayout({
   }
   setRequestLocale(locale);
 
-  return (
-    <div className="bg-secondary-200  h-full w-full  ">
-      {children} <Footer lang={locale} />
-    </div>
-  );
+  return <div className="bg-secondary-200  h-full w-full  ">{children}</div>;
 }

@@ -1,10 +1,14 @@
 const data = {
   image: "/conshield-pu.png",
-  productName: { en: "GSO CONSHIELD PU" },
-  productSubtitle: { en: "Flexible Elastomeric Waterproof Coating" },
+  productName: { en: "CONSHIELD PU", ar: "CONSHIELD PU" },
+  productSubtitle: {
+    en: "Flexible Elastomeric Waterproof Coating",
+    ar: "طلاء عزل مائي مرن مطاطي",
+  },
   description: {
     label: {
       en: "Description",
+      ar: "الوصف",
     },
     data: {
       en: `GSO-CONSHIELD PU, WATER PROOF COATING IT IS A FLEXIBLE, ELASTOMERIC COATING
@@ -14,10 +18,12 @@ IT IS APPLIED BY BRUSH OR ROLLER TO A THICK, HIGHLY DURABLE COATING. IT CAN BE
 APPLIED ON CONCRETE ASBESTOS, WOOD, BRICK/STONE, TILES AND TEXTILES. IT IS A SINGLE
 COMPONENT EMULSION CONTAINING INERT PIGMENTS AND HAS A BRUSH ABLE CONSISTENCY
 `,
+      ar: `CONSHIELD PU هو طلاء عزل مائي مرن مطاطي قائم على بوليمرات أكريليك. يُطبق كسائل ثم يتصلب ليكوّن غشاء عازل متين ومقاوم للماء.
+يُطبق بالفرشاة أو الرول ليعطي طبقة سميكة عالية المتانة. يمكن تطبيقه على الخرسانة، الأسبستوس، الخشب، الطوب/الحجر، البلاط والمنسوجات. وهو مستحلب أحادي المكون يحتوي على أصباغ خاملة وقوام مناسب للفرشاة.`,
     },
   },
   uses: {
-    label: { en: "Uses" },
+    label: { en: "Uses", ar: "الاستخدامات" },
     data: [
       {
         en: `GSO-CONSHIELD PU IS PRIMARILY USED
@@ -27,6 +33,7 @@ CONCRETE STRUCTURES AGAINST
 CARBONATION AND WATER AND
 CHLORIDE INGRESS .
 `,
+        ar: `CONSHIELD PU يستخدم أساساً لحماية الأسطح، ومصمم لحماية المنشآت الخرسانية ضد الكربنة وتسرب الماء واختراق الكلوريد.`,
       },
       {
         en: `THE PRODUCT IS ALSO SUITABLE AS A
@@ -36,6 +43,7 @@ ASBESTOS/FIBER CEMENT AND ZINC
 SHEETS, ASPHALT, BUILT-UP FELT AND
 TILES.
 `,
+        ar: `المنتج مناسب أيضاً كطلاء عزل مائي مطاطي بدون فواصل للأخشاب والأسبستوس/الأسمنت الليفي وصفائح الزنك والأسفلت واللباد المركب والبلاط.`,
       },
       {
         en: `I T CAN ALSO BE USED UNDER
@@ -43,104 +51,146 @@ TERRAZZO OR TILE FLOORS, SHOWER
 PANS, KITCHEN, LAUNDRY AND
 BATHROOM FLOORS.
 `,
+        ar: `يمكن استخدامه أيضاً تحت أرضيات التيرازو أو البلاط، وأحواض الاستحمام، وأرضيات المطابخ وغرف الغسيل والحمامات.`,
       },
       {
         en: `WATER TANKS AND SWIMMING POOLS
 AND BASEMENT WALLS FROM THE
 OUTSIDE.`,
+        ar: `خزانات المياه والمسابح وجدران الأقبية من الخارج.`,
       },
     ],
   },
 
   properties: {
-    label: { en: "Properties" },
+    label: { en: "Properties", ar: "الخصائص" },
+    tableHeaders: {
+      property: { en: "Property", ar: "الخاصية" },
+      value: { en: "Value", ar: "القيمة" },
+    },
     data: [
-      { label: { en: "Finish" }, value: { en: "Smooth. Water only" } },
-      { label: { en: "Color" }, value: { en: "Dark Gray" } },
-      { label: { en: "Weight per Liter" }, value: { en: "138 kg" } },
-      { label: { en: "Elongation" }, value: { en: "400%" } },
-      { label: { en: "Working Temperature" }, value: { en: "5-50°C" } },
       {
-        label: { en: "Chloride Ion Diffusivity" },
-        value: { en: "43 g/m²/24 h" },
+        label: { en: "Finish", ar: "الملمس" },
+        value: { en: "Smooth. Water only", ar: "ناعم. يعتمد على الماء فقط" },
       },
-      { label: { en: "Flash Point" }, value: { en: "Non-Flammable" } },
       {
-        label: { en: "Chemical resistance" },
+        label: { en: "Color", ar: "اللون" },
+        value: { en: "Dark Gray", ar: "رمادي غامق" },
+      },
+      {
+        label: { en: "Weight per Liter", ar: "الوزن لكل لتر" },
+        value: { en: "138 kg", ar: "138 كجم" },
+      },
+      {
+        label: { en: "Elongation", ar: "الاستطالة" },
+        value: { en: "400%", ar: "400%" },
+      },
+      {
+        label: { en: "Working Temperature", ar: "درجة حرارة التشغيل" },
+        value: { en: "5-50°C", ar: "5-50°C" },
+      },
+      {
+        label: { en: "Chloride Ion Diffusivity", ar: "نفاذية أيون الكلوريد" },
+        value: { en: "43 g/m²/24 h", ar: "43 جم/م²/24 ساعة" },
+      },
+      {
+        label: { en: "Flash Point", ar: "نقطة الوميض" },
+        value: { en: "Non-Flammable", ar: "غير قابل للاشتعال" },
+      },
+      {
+        label: { en: "Chemical resistance", ar: "المقاومة الكيميائية" },
         value: {
           en: "Resistance to spillage of grease, fatty acids and diluted acids (chlorine and alkalis).",
+          ar: "مقاومة لانسكاب الشحوم والأحماض الدهنية والأحماض المخففة (الكلور والقلويات).",
         },
       },
-      { label: { en: "Packaging" }, value: { en: "—" } },
       {
-        label: { en: "Coverage" },
-        value: { en: "0.6 to 0.9 kg per m² per coat" },
+        label: { en: "Packaging", ar: "التعبئة" },
+        value: { en: "—", ar: "—" },
+      },
+      {
+        label: { en: "Coverage", ar: "التغطية" },
+        value: {
+          en: "0.6 to 0.9 kg per m² per coat",
+          ar: "0.6 إلى 0.9 كجم لكل م² لكل طبقة",
+        },
       },
     ],
   },
 
   advantages: {
-    label: { en: "Advantages" },
+    label: { en: "Advantages", ar: "المزايا" },
     data: [
       {
         label: {
           en: "DURABILITY",
+          ar: "المتانة",
         },
         description: {
           en: `HIGH ACRYLIC POLYMER
 CONTENT ENSURES EXCELLENT
 DURABILITY.
 `,
+          ar: `يضمن المحتوى العالي من بوليمر الأكريليك متانة ممتازة.`,
         },
       },
 
       {
         label: {
           en: "ELASTOMERIC",
+          ar: "المرونة",
         },
         description: {
           en: `OPTIMUM TENSILE
 STRENGTH AND ELONGATION ENSURES
 ELASTOMERIC NATURE`,
+          ar: `يوفر قوة شد واستطالة مثالية تضمن الطبيعة المرنة للمادة.`,
         },
       },
 
       {
         label: {
           en: "WATERPROOF",
+          ar: "مقاومة الماء",
         },
         description: {
           en: `PROTECTS CONCRETE
 FROM WATERBORNE SALTS. BECAUSE IT IS
 VERY STRONG WATERPROOF.
 `,
+          ar: `يحمي الخرسانة من الأملاح المحمولة بالماء لكونه عازلاً قوياً جداً.`,
         },
       },
       {
         label: {
           en: "EASE OF USE",
+          ar: "سهولة الاستخدام",
         },
         description: {
           en: `VERY EASY TO APPLY BY
 BRUSH, ROLLER OR AIRLESS SPRAY AND
 IS READY TO USE.
 `,
+          ar: `سهل جداً في التطبيق بالفرشاة أو الرول أو الرش بدون هواء وجاهز للاستخدام.`,
         },
       },
       {
         label: {
           en: "HANDLING",
+          ar: "التعامل الآمن",
         },
         description: {
           en: `NONFLAMMABLE AND SAFE
 HANDLING ENSURED BY WATER-BASED
 NATURE OF PRODUCT.
 `,
+          ar: `غير قابل للاشتعال وآمن في الاستخدام بفضل طبيعته المائية.`,
         },
       },
       {
         label: {
           en: "PROTECTION",
+          ar: "الحماية",
         },
         description: {
           en: `A BARRIER AGAINST SALTS,
@@ -149,11 +199,13 @@ FROM ANY REACTIONS AND STRONG
 RESISTANCE TO ALL WEATHER FACTORS
 AND SUNLIGHT.
 `,
+          ar: `يشكل حاجزاً ضد الأملاح والمواد الكيميائية والأبخرة الناتجة عن التفاعلات ويقاوم عوامل الطقس وأشعة الشمس.`,
         },
       },
       {
         label: {
           en: "HIGH CONSTRUCTION",
+          ar: "بناء عالي الجودة",
         },
         description: {
           en: `HIDES DEFECTS
@@ -161,10 +213,12 @@ AND IS CONSIDERED A BASIC PILLAR. IT
 DOES NOT NEED PROTECTION ONLY IF
 YOU WALK ON IT.
 `,
+          ar: `يخفي العيوب ويعد أساساً مهماً. لا يحتاج إلى حماية إضافية حتى عند المشي عليه.`,
         },
       },
     ],
   },
+  safetyLabel: { en: "Safety", ar: "السلامة" },
   safety: {
     en: `TAKE PRECAUTIONS TO PREVENT
 MATERIAL ENTERING THE EYES. WEAR
@@ -178,10 +232,12 @@ TEMPERATURES. LOW TEMPERATURES
 AND HIGH ATMOSPHERIC HUMIDITY WILL
 SLOW DOWN THE CURING RATE AND VICE
 VERSA.`,
+    ar: `اتخذ الاحتياطات لمنع دخول المادة إلى العينين. ارتدِ نظارات واقية أثناء التطبيق، ووفّر تهوية كافية، واستخدم قناع الوجه أثناء العمل.
+اترك 24 ساعة بين الطبقات. زمن التصلب النهائي 48 ساعة كافٍ في درجات الحرارة العادية. درجات الحرارة المنخفضة والرطوبة العالية تُبطئ معدل التصلب والعكس صحيح.`,
   },
 
   application: {
-    label: { en: "Application" },
+    label: { en: "Application", ar: "التطبيق" },
     data: {
       description: {
         en: `GSO-CONSHIELD PU CAN BE APPLIED BY BRUSH, ROLLER OR AIRLESS SPRAY. ALL SURFACES TO BE COATED MUST BE CLEAN DRY AND FREE FROM DUST, DIRT, OIL, GREASE AND OTHER CONTAMINANTS. A TYPICAL FOURCOAT APPLICATION PROPERLY APPLIED AT THE RATE OF 300 400 MICRONS PER COAT WOULD YIELD TOTAL THICKNESS OF 1.5 MM (1500 MICRONS), IN ORDER TO ACHIEVE THIS THE APPLICAT- ION SHOLLD BE CARRIED OUT
@@ -191,36 +247,45 @@ AND THE PRODUCT RELIES ON A UNIFIED APPLICATION FOR ALL PLACES TO BE PROTECTED, 
 CONDITIONS.
 THE MATERIAL IS APPLIED EITHER BY BRUSH OR SPRAYED WITH A COMPRESSOR. IT IS PREFERABLE TO USE A BRUSH AS IT
 ENABLES THE MATERIAL TO ADHERE WELL.`,
+        ar: `يمكن تطبيق CONSHIELD PU بالفرشاة أو الرول أو الرش بدون هواء. يجب أن تكون جميع الأسطح نظيفة وجافة وخالية من الغبار والأوساخ والزيوت والشحوم والملوثات الأخرى. يؤدي تطبيق أربع طبقات بمعدل 300–400 ميكرون لكل طبقة إلى سماكة كلية 1.5 مم (1500 ميكرون). لتحقيق ذلك يجب أن يتم التطبيق بمعدل 0.6–0.9 كجم لكل م² لكل طبقة. تختلف التغطية حسب نوع وجودة السطح وطريقة التطبيق. يعتمد المنتج على تطبيق موحد لجميع المناطق المراد حمايتها ضمن ظروف خاصة وسهلة.
+يُطبق بالفرشاة أو بالرش باستخدام ضاغط، ويفضل استخدام الفرشاة لأنها تساعد على التصاق المادة جيداً.`,
       },
+      stepsLabel: { en: "Steps", ar: "الخطوات" },
       steps: [
         {
           en: `THE SURFACE TO WHICH THE MATERIAL IS TO BE APPLIED IS CLEANED AND ANY
 STUCK MATERIALS, DIRT OR DUST ARE REMOVED.`,
+          ar: `يتم تنظيف السطح المراد تطبيق المادة عليه وإزالة أي مواد عالقة أو أوساخ أو غبار.`,
         },
         {
           en: `IT IS NOT ALLOWED TO HAVE MOISTURE ON THE SURFACE ON WHICH GSO
 CONSHIELD PU IS TO BE USED, SO IT IS LEFT TO DRY WELL.`,
+          ar: `لا يُسمح بوجود رطوبة على السطح الذي سيُستخدم عليه جي إس أو-كونشيلد بي يو، لذلك يُترك ليجف جيداً.`,
         },
         {
           en: `GSO CONSHIELD PU IS APPLIED IN THREE OR FOUR LAYERS, AND EACH LAYER IS APPROXIMATELY 400 MICRONS. THE THICKNESS REQUIRED FOR EACH LAYER IS APPROXIMATELY USING A BRUSH TO ENSURE THAT NO GAPS ARE LEFT AND THE REQUIRED THICKNESS IS
 COORDINATED. THE QUANTITY PER M2 IS 0.6-0.9 KG AND THE THICKNESS IS ONLY 1.5 MM. THIS DEPENDS ON THE
 SMOOTHNESS OR ROUGHNESS OF THE SURFACE. IF IT IS ROUGH, THE SURFACE WILL CONSUME MORE MATERIAL.`,
+          ar: `يُطبق جي إس أو-كونشيلد بي يو بثلاث أو أربع طبقات، وسماكة كل طبقة تقريباً 400 ميكرون. تُستخدم الفرشاة لضمان عدم وجود فراغات وتحقيق السماكة المطلوبة. الكمية لكل م² هي 0.6–0.9 كجم والسماكة الكلية 1.5 مم. يعتمد ذلك على نعومة أو خشونة السطح؛ فالسطح الخشن يستهلك مادة أكثر.`,
         },
         {
           en: `DO NOT USE GSO CONSHIELD PU AT A TEMPERATURE BELOW 5°C, BECAUSE THE MATERIAL IS VERY COHESIVE AND IS NOT SUITABLE FOR PROPER
 APPLICATION.`,
+          ar: `لا تستخدم جي إس أو-كونشيلد بي يو عند درجة حرارة أقل من 5°C لأن المادة تكون شديدة اللزوجة وغير مناسبة للتطبيق الصحيح.`,
         },
         {
           en: `IN CASE OF EXTREME COLD... THE MATERIAL CANNOT BE HEATED WITH HIGH HEAT OR FIRE. THE MATERIALS MUST BE STORED IN THE APPROPRIATE PLACE UNTIL THEY ARE USED PROPERLY IN THE APPLICATION.... AND IT CAN BE EXTENDED WITH WARM WATER.`,
+          ar: `في حالة البرودة الشديدة، لا يمكن تسخين المادة بحرارة عالية أو بالنار. يجب تخزين المواد في المكان المناسب حتى تُستخدم بالشكل الصحيح، ويمكن تمديدها بماء دافئ.`,
         },
         {
           en: `APPLYING GSO CONSHIELD PU IS EASY AND REQUIRES NOT MUCH EXPERIENCED WORKERS. PROPER APPLICATION MUST ONLY BE ADHERED TO. IT IS POSSIBLE TO WALK ON THE SURFACE AFTER APPLYING GSO CONSHIELD PU AFTER 8 HOURS IF THE WEATHER TEMPERATURE EXCEEDS 20°C`,
+          ar: `تطبيق جي إس أو-كونشيلد بي يو سهل ولا يتطلب عمالة كثيرة الخبرة، مع الالتزام بالتطبيق الصحيح. يمكن المشي على السطح بعد 8 ساعات إذا كانت درجة الحرارة أعلى من 20°C.`,
         },
       ],
     },
   },
   importantNote: {
-    label: { en: "Important Note" },
+    label: { en: "Important Note", ar: "ملاحظة مهمة" },
     data: {
       en: `WHEN OPENING THE LID OF THE PACKAGE
 AND TAKING A LIMITED AMOUNT OF GSO
@@ -233,17 +298,19 @@ UPON EXPOSURE TO THE AIR, AND IT IS
 PROHIBITED TO STORE THE MATERIAL
 UNDER SUNLIGHT FOR A LONG TIME.
 `,
+      ar: `عند فتح غطاء العبوة وأخذ كمية محدودة من CONSHIELD PU، يجب إغلاق العبوة فوراً وتكرار ذلك حتى انتهاء المحتوى، لأن المادة تبدأ بالجفاف فور تعرضها للهواء. ويُمنع تخزين المادة تحت أشعة الشمس لفترة طويلة.`,
     },
   },
   cleaning: {
-    label: { en: "Cleaning" },
+    label: { en: "Cleaning", ar: "التنظيف" },
     data: {
       en: `FOR CLEANING OF THE TOOLS AND
 EQUIPMENT USE FRESH WATER ONLY`,
+      ar: `لتنظيف الأدوات والمعدات يُستخدم الماء العذب فقط.`,
     },
   },
   mixing: {
-    label: { en: "Mixing" },
+    label: { en: "Mixing", ar: "الخلط" },
     data: {
       en: `MATERIALS MUST BE CAREFULLY MIXED
 AND THINNED TO APPLICATION
@@ -251,42 +318,72 @@ CONSISTENCYWITH FRESH WATER ONLY.
 CARE SHOULD BE TAKEN DURING MIXING
 IN ORDER TO AVOID AERATION OF THE
 MATERIAL.`,
+      ar: `يجب خلط المواد بعناية وتخفيفها للوصول لقوام التطبيق باستخدام ماء عذب فقط. يجب الحذر أثناء الخلط لتجنب إدخال الهواء في المادة.`,
     },
   },
   note: {
-    label: { en: "Note" },
+    label: { en: "Note", ar: "ملاحظة" },
     data: {
       en: `NEVER APPLY IN RAIN OR SUBSTRATE
 IMMERSED IN WATER. DO NOT CLEAN THE
 CURED COAT WITH BROOMS THAT HAVE
 BRISTLES.
 `,
+      ar: `لا تُطبق المادة أثناء المطر أو على سطح مغمور بالماء. لا تنظف الطبقة المتصلبة بمكانس ذات شعيرات.`,
     },
   },
   fire: {
-    label: { en: "Fire" },
+    label: { en: "Fire", ar: "الحريق" },
     data: {
       en: `WATER BASED MATERIAL, THEREFORE
 NONFLAMMABLE`,
+      ar: `مادة أساسها مائي، لذلك فهي غير قابلة للاشتعال.`,
     },
   },
   dryingTime: {
-    label: { en: "Drying Time" },
+    label: { en: "Drying Time", ar: "زمن الجفاف" },
     data: [
       {
-        temp: { label: { en: "Temperature" }, value: { en: "25°C" } },
-        dryToTouch: { label: { en: "Dry to touch" }, value: { en: "8 hrs" } },
-        hardDry: { label: { en: "Hard dry" }, value: { en: "24 hrs" } },
+        temp: {
+          label: { en: "Temperature", ar: "درجة الحرارة" },
+          value: { en: "25°C", ar: "25°C" },
+        },
+        dryToTouch: {
+          label: { en: "Dry to touch", ar: "جاف عند اللمس" },
+          value: { en: "8 hrs", ar: "8 ساعات" },
+        },
+        hardDry: {
+          label: { en: "Hard dry", ar: "جاف تماماً" },
+          value: { en: "24 hrs", ar: "24 ساعة" },
+        },
       },
       {
-        temp: { label: { en: "Temperature" }, value: { en: "35°C" } },
-        dryToTouch: { label: { en: "Dry to touch" }, value: { en: "7 hrs" } },
-        hardDry: { label: { en: "Hard dry" }, value: { en: "20 hrs" } },
+        temp: {
+          label: { en: "Temperature", ar: "درجة الحرارة" },
+          value: { en: "35°C", ar: "35°C" },
+        },
+        dryToTouch: {
+          label: { en: "Dry to touch", ar: "جاف عند اللمس" },
+          value: { en: "7 hrs", ar: "7 ساعات" },
+        },
+        hardDry: {
+          label: { en: "Hard dry", ar: "جاف تماماً" },
+          value: { en: "20 hrs", ar: "20 ساعة" },
+        },
       },
       {
-        temp: { label: { en: "Temperature" }, value: { en: "45°C" } },
-        dryToTouch: { label: { en: "Dry to touch" }, value: { en: "6 hrs" } },
-        hardDry: { label: { en: "Hard dry" }, value: { en: "18 hrs" } },
+        temp: {
+          label: { en: "Temperature", ar: "درجة الحرارة" },
+          value: { en: "45°C", ar: "45°C" },
+        },
+        dryToTouch: {
+          label: { en: "Dry to touch", ar: "جاف عند اللمس" },
+          value: { en: "6 hrs", ar: "6 ساعات" },
+        },
+        hardDry: {
+          label: { en: "Hard dry", ar: "جاف تماماً" },
+          value: { en: "18 hrs", ar: "18 ساعة" },
+        },
       },
     ],
   },
@@ -371,9 +468,11 @@ export default async function ConshieldPUPage({ params }: PageProps) {
               <thead>
                 <tr className="bg-primary-500 text-primary-foreground">
                   <th className="text-left py-3 px-4 font-semibold">
-                    Property
+                    {text(data.properties.tableHeaders.property, locale)}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">Value</th>
+                  <th className="text-left py-3 px-4 font-semibold">
+                    {text(data.properties.tableHeaders.value, locale)}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -467,7 +566,7 @@ export default async function ConshieldPUPage({ params }: PageProps) {
         {/* Safety */}
         <section className="rounded-lg bg-primary-500/5 border border-primary-500/20 p-4">
           <h2 className="text-lg font-semibold text-primary-500 mb-2">
-            Safety
+            {text(data.safetyLabel, locale)}
           </h2>
           <p className="text-foreground whitespace-pre-line">
             {text(data.safety, locale)}
@@ -482,7 +581,9 @@ export default async function ConshieldPUPage({ params }: PageProps) {
           <p className="text-foreground whitespace-pre-line mb-6">
             {text(data.application.data.description, locale)}
           </p>
-          <h3 className="text-lg font-medium text-secondary-500 mb-3">Steps</h3>
+          <h3 className="text-lg font-medium text-secondary-500 mb-3">
+            {text(data.application.data.stepsLabel, locale)}
+          </h3>
           <ol className="list-decimal list-inside space-y-3 text-foreground">
             {data.application.data.steps.map((step, i) => (
               <li key={i} className="whitespace-pre-line">

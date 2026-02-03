@@ -1,112 +1,163 @@
 const data = {
   image: "/polyurethane-300.png",
-  productName: { en: "POLYURETHANE M300" },
-  productSubtitle: { en: "Acrylic Modified Polyurethane Membrane" },
+  productName: { en: "POLYURETHANE M300", ar: "POLYURETHANE M300" },
+  productSubtitle: {
+    en: "Acrylic Modified Polyurethane Membrane",
+    ar: "غشاء بولي يوريثان معدل بالأكريليك",
+  },
   description: {
     label: {
       en: "Description",
+      ar: "الوصف",
     },
     data: {
       en: `POLYURETHANE M300 is a one component, acrylic modified polyurethane membrane. Product can be applied with a brush, roller or airless spray`,
+      ar: `POLYURETHANE M300 غشاء بولي يوريثان معدل بالأكريليك أحادي المكون. يمكن تطبيق المنتج بالفرشاة أو الرول أو الرش بدون هواء.`,
     },
   },
   uses: {
-    label: { en: "Uses" },
+    label: { en: "Uses", ar: "الاستخدامات" },
     data: [
       {
         en: `Waterproofing coating for concrete slabs, roofs, balconies, kitchens and bathrooms under tiling floors`,
+        ar: `طلاء عزل مائي للبلاطات الخرسانية والأسطح والشرفات والمطابخ والحمامات تحت البلاط.`,
       },
       {
         en: `Waterproofing for planter boxes`,
+        ar: `عزل مائي لأحواض الزراعة.`,
       },
       {
         en: `Waterproofing new and existing structures`,
+        ar: `عزل مائي للمنشآت الجديدة والقائمة.`,
       },
       {
         en: `Coating for internal as well as external surfaces`,
+        ar: `طلاء للأسطح الداخلية والخارجية.`,
       },
       {
         en: `Waterproof lining for potable water containers, tanks, reservoirs, swimming pool`,
+        ar: `بطانة عزل مائي لخزانات المياه الصالحة للشرب والخزانات والمستودعات والمسابح.`,
       },
     ],
   },
   advantages: {
-    label: { en: "Advantages" },
+    label: { en: "Advantages", ar: "المزايا" },
     data: [
       {
-        label: { en: "Easy to use" },
+        label: { en: "Easy to use", ar: "سهولة الاستخدام" },
         description: {
           en: `Easily brushable or spray applied product.`,
+          ar: `منتج سهل التطبيق بالفرشاة أو بالرش.`,
         },
       },
       {
-        label: { en: "Durability" },
+        label: { en: "Durability", ar: "المتانة" },
         description: {
           en: `Delivers superior durability under local climatic conditions.`,
+          ar: `يوفر متانة فائقة في الظروف المناخية المحلية.`,
         },
       },
       {
-        label: { en: "Adhesion" },
+        label: { en: "Adhesion", ar: "الالتصاق" },
         description: {
           en: `Excellent adhesion. Bonds to porous and non-porous surfaces.`,
+          ar: `التصاق ممتاز. يلتصق بالأسطح المسامية وغير المسامية.`,
         },
       },
       {
-        label: { en: "Flexibility" },
+        label: { en: "Flexibility", ar: "المرونة" },
         description: {
           en: `Specially blended acrylic and PU improve flexibility.`,
+          ar: `مزيج الأكريليك والبولي يوريثان يحسن المرونة.`,
         },
       },
       {
-        label: { en: "Non-staining" },
+        label: { en: "Non-staining", ar: "غير مُلطخ" },
         description: {
           en: `Does not stain tiles or marble.`,
+          ar: `لا يلطخ البلاط أو الرخام.`,
         },
       },
       {
-        label: { en: "Vapor permeability" },
+        label: { en: "Vapor permeability", ar: "نفاذية البخار" },
         description: {
           en: `Fully cured membrane allows substrate to breathe.`,
+          ar: `الغشاء بعد التصلب الكامل يسمح للسطح بالتنفس.`,
         },
       },
       {
-        label: { en: "Special Features" },
+        label: { en: "Special Features", ar: "ميزات خاصة" },
         description: {
           en: `Non-toxic, eco-friendly, durable, and self-leveling.`,
+          ar: `غير سام، صديق للبيئة، متين، وذاتي التسوية.`,
         },
       },
     ],
   },
   surfacePreparation: {
-    label: { en: "Surface preparation" },
+    label: { en: "Surface preparation", ar: "تحضير السطح" },
     data: {
       en: `All substrates must be structurally sound and clean from grease, oil, or contaminants. Use POLYURETHANE M300 primer if required.`,
+      ar: `يجب أن تكون جميع الأسطح سليمة إنشائياً ونظيفة من الشحوم والزيوت أو الملوثات. استخدم برايمر POLYURETHANE M300 إذا لزم الأمر.`,
     },
   },
   application: {
-    label: { en: "Application" },
+    label: { en: "Application", ar: "التطبيق" },
     data: {
       en: `Apply 250-350 microns using brush, roller or spray. Allow to harden before applying second coat.`,
+      ar: `يُطبق بسماكة 250-350 ميكرون باستخدام الفرشاة أو الرول أو الرش. اتركه ليتصلب قبل تطبيق الطبقة الثانية.`,
     },
   },
   healthAndSafety: {
-    label: { en: "Health and safety" },
+    label: { en: "Health and safety", ar: "الصحة والسلامة" },
     data: {
       en: `Non-toxic but mildly alkaline. Do wear gloves during use. Rinse with clean water if in contact with skin or eyes. Seek medical advice if necessary.`,
+      ar: `غير سام لكنه قلوي بشكل خفيف. ارتدِ القفازات أثناء الاستخدام. اغسل بالماء النظيف عند ملامسة الجلد أو العينين. اطلب المشورة الطبية عند الحاجة.`,
     },
   },
   standardsAndProperties: {
-    label: { en: "Standards and properties" },
+    label: { en: "Standards and properties", ar: "المعايير والخواص" },
+    tableHeaders: {
+      property: { en: "Property", ar: "الخاصية" },
+      value: { en: "Value", ar: "القيمة" },
+    },
     data: [
-      { label: { en: "Hardness (Shore A)" }, value: { en: "60" } },
-      { label: { en: "Permeability" }, value: { en: "1.02 perms" } },
-      { label: { en: "Thickness" }, value: { en: "1.00 mm" } },
-      { label: { en: "Bond strength" }, value: { en: "2.0 N/mm²" } },
-      { label: { en: "Tensile strength" }, value: { en: "1.6 N/mm²" } },
-      { label: { en: "Tear strength" }, value: { en: "14.0 N/mm²" } },
-      { label: { en: "Elongation" }, value: { en: "650%" } },
-      { label: { en: "Drying time" }, value: { en: "2 hrs (25°C)" } },
-      { label: { en: "Full cure" }, value: { en: "7 days" } },
+      {
+        label: { en: "Hardness (Shore A)", ar: "الصلادة (شور A)" },
+        value: { en: "60", ar: "60" },
+      },
+      {
+        label: { en: "Permeability", ar: "النفاذية" },
+        value: { en: "1.02 perms", ar: "1.02 برمز" },
+      },
+      {
+        label: { en: "Thickness", ar: "السماكة" },
+        value: { en: "1.00 mm", ar: "1.00 مم" },
+      },
+      {
+        label: { en: "Bond strength", ar: "قوة الالتصاق" },
+        value: { en: "2.0 N/mm²", ar: "2.0 نيوتن/مم²" },
+      },
+      {
+        label: { en: "Tensile strength", ar: "قوة الشد" },
+        value: { en: "1.6 N/mm²", ar: "1.6 نيوتن/مم²" },
+      },
+      {
+        label: { en: "Tear strength", ar: "قوة التمزق" },
+        value: { en: "14.0 N/mm²", ar: "14.0 نيوتن/مم²" },
+      },
+      {
+        label: { en: "Elongation", ar: "الاستطالة" },
+        value: { en: "650%", ar: "650%" },
+      },
+      {
+        label: { en: "Drying time", ar: "زمن الجفاف" },
+        value: { en: "2 hrs (25°C)", ar: "ساعتان (25°C)" },
+      },
+      {
+        label: { en: "Full cure", ar: "التصلب الكامل" },
+        value: { en: "7 days", ar: "7 أيام" },
+      },
     ],
   },
 };
@@ -209,9 +260,17 @@ export default async function Polyurethane300Page({ params }: PageProps) {
               <thead>
                 <tr className="bg-primary-500 text-primary-foreground">
                   <th className="text-left py-3 px-4 font-semibold">
-                    Property
+                    {text(
+                      data.standardsAndProperties.tableHeaders.property,
+                      locale,
+                    )}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">Value</th>
+                  <th className="text-left py-3 px-4 font-semibold">
+                    {text(
+                      data.standardsAndProperties.tableHeaders.value,
+                      locale,
+                    )}
+                  </th>
                 </tr>
               </thead>
               <tbody>

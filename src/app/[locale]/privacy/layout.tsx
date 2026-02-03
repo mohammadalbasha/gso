@@ -41,7 +41,7 @@ export default async function PrivacyLayout({
 
   return (
     <div className="bg-secondary-200 flex flex-col items-center w-full  ">
-      {children} <Footer lang={locale} />
+      {children}
     </div>
   );
 }
