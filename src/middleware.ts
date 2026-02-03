@@ -51,6 +51,12 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  /* Handle root path - let next-intl middleware handle locale detection */
+  if (request.nextUrl.pathname === "/") {
+    const handleI18nRouting = createMiddleware(routing);
+    return handleI18nRouting(request);
+  }
+
   const [, locale, ...segments] = request.nextUrl.pathname.split("/");
 
   /* modify headers */
@@ -62,7 +68,7 @@ export default async function middleware(request: NextRequest) {
 
   /* check if localization is not correct - redirect */
   /* next-intl middleware handle this , but after the logic by us completed so we need to check it manually*/
-  if (locale != "en" && locale != "ar") {
+  if (locale && locale != "en" && locale != "ar") {
     return NextResponse.redirect(
       new URL(`/ar${request.nextUrl.pathname}`, request.url),
     );
@@ -126,7 +132,7 @@ export const config = {
   // Match all pathnames except for
   // - … if they start with `/api`, `/next-api`, `/trpc`, `/_next` or `/_vercel`
   // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+  matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)", "/"],
 };
 
 // export const config = {
