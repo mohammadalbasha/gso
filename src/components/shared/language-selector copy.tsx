@@ -13,7 +13,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { getLangDir } from "rtl-detect";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { CONFIG } from "@/lib/config";
 import { toast } from "sonner";
 
 export function LanguageSelector() {

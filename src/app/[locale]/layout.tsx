@@ -11,9 +11,6 @@ import { getLangDir } from "rtl-detect";
 import { LanguageCode } from "@/i18n/languages";
 import { languages } from "@/i18n/languages";
 import { Toaster } from "@/components/ui/sonner";
-import Script from "next/script";
-import { CONFIG } from "@/lib/config";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { AppContext } from "@/context/app.context";
 import { ScrollPositionProvider } from "@/context/scroll.context";
