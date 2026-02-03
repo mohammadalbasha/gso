@@ -1,0 +1,179 @@
+{
+  "header": {
+    "nav": {
+      "home": "GSO",
+      "contact": "Contact Us",
+      "about": "About Us"
+    },
+    "appName": "GSO"
+  },
+  "sidebar": {
+    "profile": "Profile",
+    "profilePicture": "Profile Picture",
+    "myListings": "My Listings",
+    "personalFile": "Personal File",
+    "searchHistory": "Search History",
+    "purchaseHistory": "Purchase History",
+    "bookingHistory": "Booking History",
+    "favorites": "Favorites",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "support": "Support",
+    "logout": "Logout",
+    "deleteAccount": "Delete Account"
+  },
+  "footer": {
+    "appName": "Aqar",
+    "description": "Global Observatory Company for Building Construction - Specialists in waterproofing, concrete repair, and specialty materials. We provide comprehensive solutions for your projects in Kuwait.",
+    "whoWeAre": "Who We Are ?",
+    "aboutUs": "About Company",
+    "services": "Services",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "language": "Language",
+    "currency": "Currency",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "languageSelector": {
+      "error": "Something went wrong"
+    },
+    "branches": "Our Branches"
+  },
+  "home": {
+    "metadata": {
+      "title": "GSO | Specialized in Building Construction",
+      "description": "GSO is a specialized company in building construction, concrete repair, and special materials"
+    },
+    "aboutSection": {
+      "title": "About Our Company",
+      "paragraph1": "Global Observatory Company for Building Construction is a leading company in waterproofing, concrete repair, and specialty materials. We have exclusive agencies and our own specialized products that ensure the highest standards of quality and performance.",
+      "paragraph2": "We are proud to have completed many distinguished projects in the State of Kuwait, including waterproofing basements, tanks, swimming pools, water basins, and complete buildings with roofs and basements. Our extensive experience and quality materials have made us the first choice for contractors and real estate developers.",
+      "missionTitle": "Our Mission",
+      "missionText": "To provide advanced waterproofing solutions and concrete repair services with the highest quality standards, commitment to deadlines, and customer satisfaction.",
+      "visionTitle": "Our Vision",
+      "visionText": "To be the leading company in waterproofing and specialized building materials in the region."
+    },
+    "hero": {
+      "titleLine1": "Global Observatory Company",
+      "titleLine2": "Specialized in Building Construction"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Services",
+      "buildingConstruction": "Building Construction",
+      "concreteRepair": "Concrete Repair",
+      "specialMaterials": "Special Materials"
+    },
+    "products": {
+      "title": "Our Products",
+      "subtitle": "Products",
+      "visit": "Visit"
+    }
+  },
+  "branches": {
+    "metadata": {
+      "title": "Our Branches - Global Observatory Company",
+      "description": "Find our branch locations in Kuwait and Syria"
+    },
+    "title": "Our Branches",
+    "subtitle": "We are at your service",
+    "kuwait": "Kuwait",
+    "syria": "Syria",
+    "comingSoon": "Coming Soon",
+    "address": "Address",
+    "kuwaitAddress": "Shuwaikh, Al Zena St, Al Hayat Commercial Complex, Shop No. 28"
+  },
+  "about": {
+    "metadata": {
+      "title": "About Us - Global Observatory Company",
+      "description": "Learn about Global Observatory Company for Building Construction"
+    },
+    "title": "About Us",
+    "firstParagraph": "Global Observatory Company for Building Construction is a leading company in waterproofing, concrete repair, and specialty materials. The company was founded with a clear vision to provide advanced solutions and high-quality materials for construction projects in Kuwait and the region.",
+    "secondParagraph": "We have exclusive agencies and our own specialized products that ensure the highest standards of quality and performance. Our extensive experience in the field has made us a trusted partner for contractors and real estate developers.",
+    "thirdParagraph": "We are proud to have completed many distinguished projects in the State of Kuwait, including waterproofing basements, tanks, swimming pools, water basins, and complete buildings with roofs and basements. Our commitment to quality, deadlines, and customer satisfaction has made us the first choice in the market.",
+    "visionTitle": "Our Vision",
+    "visionDescription": "To be the leading company in waterproofing and specialized building materials in the region, and to contribute to building a better future by providing innovative and sustainable solutions."
+  },
+  "notFound": {
+    "metadata": {
+      "title": "Page not found",
+      "description": "The link is not correct"
+    },
+    "title": "Page not found",
+    "description": "The link is not correct"
+  },
+  "privacyPolicy": {
+    "metadata": {
+      "title": "Privacy Policy - Global Observatory Company",
+      "description": "Privacy policy for Global Observatory Company website"
+    },
+    "title": "Privacy Policy",
+    "description": "At Global Observatory Company for Building Construction, we respect your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and protect the information you provide when using our website or contacting us.\\n\\nInformation Collection: We collect basic information such as name, phone number, and email when you contact us to inquire about our services or products.\\n\\nUse of Information: We use your information to respond to your inquiries, provide price quotes, and keep you informed about our new products and services.\\n\\nInformation Protection: We take appropriate security measures to protect your information from unauthorized access, modification, disclosure, or destruction.\\n\\nInformation Sharing: We do not sell, rent, or share your personal information with third parties except with your consent or when required by law.\\n\\nYour Rights: You have the right to access, update, or delete your personal information at any time by contacting us.\\n\\nFor privacy policy inquiries, please contact us via email or phone."
+  },
+  "termsOfUse": {
+    "metadata": {
+      "title": "Terms of Use - Global Observatory Company",
+      "description": "Terms of use for Global Observatory Company website"
+    },
+    "title": "Terms of Use",
+    "description": "Welcome to the Global Observatory Company for Building Construction website. By using this website, you agree to comply with the following terms and conditions:\\n\\nWebsite Use: You are permitted to use this website to view our products and services and contact us. Use of the website for any illegal or unauthorized purposes is prohibited.\\n\\nIntellectual Property Rights: All content displayed on this website, including texts, images, logos, and designs, is the property of Global Observatory Company and protected under intellectual property laws.\\n\\nInformation and Prices: We make every effort to ensure the accuracy of information and prices displayed on the website, but we reserve the right to update or correct them at any time without prior notice.\\n\\nLiability: We strive to provide accurate and reliable information, but we are not responsible for any direct or indirect damages resulting from website use.\\n\\nExternal Links: Our website may contain links to external sites. We are not responsible for the content or privacy policies of those sites.\\n\\nModifications: We reserve the right to modify these terms at any time. Your continued use of the website after modifications constitutes acceptance of the modified terms.\\n\\nFor inquiries about the terms of use, please contact us."
+  },
+  "insulatingMaterials": {
+    "metadata": {
+      "title": "Insulating Materials - Global Observatory Company",
+      "description": "Browse our high-quality insulating materials products"
+    },
+    "title": "Insulating Materials",
+    "subtitle": "Materials",
+    "visit": "Visit"
+  },
+  "contact": {
+    "metadata": {
+      "title": "Contact Us",
+      "description": "Contact Us for Aqar.ME"
+    },
+    "title": "Contact Us",
+    "titleDescriptionOne": "نحن هنا لمساعدتكم والأجابة على استفساراتكم",
+    "titleDescriptionTwo": "يسعدنا دائماً السماع منك وسيتم الرد عليك خلال وقت قصير",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "withCountryCode": " (with country code) ",
+    "message": "Message",
+    "terms": "I agree to the terms and conditions",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "messageSentSuccessfully": "Message sent successfully",
+    "messageSentFailed": "Failed to send message",
+    "validation": {
+      "number": "Must be a number",
+      "numberMin": "Must be at least {min}",
+      "numberMax": "Must be at most {max}",
+      "email": "Must be a valid email",
+      "age": "Age must be at least 0 and at most 100",
+      "message": "Message must be at least 10 characters",
+      "terms": "Must agree to the terms and conditions",
+      "required": "This field is required"
+    }
+  },
+  "projects": {
+    "metadata": {
+      "title": "Our Projects - Global Observatory Company",
+      "description": "Browse our completed projects in waterproofing and concrete repair"
+    },
+    "title": "Our Projects",
+    "subtitle": "We are proud to have completed many distinguished projects in waterproofing, concrete repair, and specialty materials",
+    "stats": {
+      "projects": "Completed Projects",
+      "years": "Years of Experience",
+      "satisfaction": "Client Satisfaction",
+      "clients": "Satisfied Clients"
+    },
+    "cta": {
+      "title": "Have a Project?",
+      "description": "We are here to help you achieve your goals. Contact us today to discuss your project.",
+      "button": "Contact Us"
+    }
+  }
+}

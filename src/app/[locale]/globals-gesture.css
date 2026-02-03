@@ -1,0 +1,19 @@
+/* Custom styling for Leaflet Gesture Handling with RTL support
+.leaflet-container .leaflet-gesture-handling-touch-warning,
+.leaflet-container .leaflet-gesture-handling-scroll-warning {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  direction: rtl;
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.leaflet-container .leaflet-gesture-handling-touch-warning::before,
+.leaflet-container .leaflet-gesture-handling-scroll-warning::before {
+  content: '';
+  display: block;
+  margin: 0 auto 10px;
+}
+ */
+
