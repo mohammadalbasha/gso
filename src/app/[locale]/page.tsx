@@ -240,7 +240,8 @@ export default async function Home({ params, searchParams }: Props) {
 
           <div className="grid md:grid-cols-2 max-w-2xl w-full mx-auto gap-8">
             {products.map((product) => (
-              <div
+              <Link
+                href={`/${locale}${product.link}`}
                 key={product.title}
                 className="group rounded-lg overflow-hidden bg-primary-50 hover:bg-white hover:shadow-xl transition-all duration-300"
               >
@@ -256,15 +257,13 @@ export default async function Home({ params, searchParams }: Props) {
                     <div
                       className={` flex items-center gap-0 transform translate-x-8 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-300 }`}
                     >
-                      <Link
-                        href={`/${locale}${product.link}`}
-                        target="_blank"
+                      <div
                         className={`bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2.5 font-medium transition-all duration-200 whitespace-nowrap ${
                           !isRtl ? "rounded-l-full" : "rounded-r-full"
                         }`}
                       >
                         {t("products.visit")}
-                      </Link>
+                      </div>
                       <div
                         className={`bg-primary-500 text-white px-6 py-2.5 font-medium whitespace-nowrap ${
                           !isRtl ? "rounded-r-full" : "rounded-l-full"
@@ -283,7 +282,7 @@ export default async function Home({ params, searchParams }: Props) {
                     {product.category[locale]}
                   </h6>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <span className="w-10 h-2 bg-primary-500 mx-auto" />

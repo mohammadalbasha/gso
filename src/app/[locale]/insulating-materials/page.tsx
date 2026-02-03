@@ -61,7 +61,8 @@ export default async function InsulatingMaterialsPage({
 
           <div className="grid md:grid-cols-2 max-w-2xl w-full mx-auto gap-8">
             {products.map((product) => (
-              <div
+              <Link
+                href={`/${locale}${product.link}`}
                 key={product.title}
                 className="group rounded-lg overflow-hidden bg-primary-50 hover:bg-white hover:shadow-xl transition-all duration-300"
               >
@@ -83,15 +84,14 @@ export default async function InsulatingMaterialsPage({
                       >
                         {product.category[locale]}
                       </div>
-                      <Link
-                        href={`/${locale}${product.link}`}
+                      <div
                         className={cn(
                           "bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2.5 font-medium transition-all duration-200 whitespace-nowrap",
                           isRtl ? "rounded-l-full" : "rounded-r-full",
                         )}
                       >
                         {t("visit")}
-                      </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export default async function InsulatingMaterialsPage({
                     {product.category[locale]}
                   </h6>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <span className="w-10 h-2 bg-primary-500 mx-auto" />
