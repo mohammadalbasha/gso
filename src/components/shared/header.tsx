@@ -44,12 +44,11 @@ export const Header = ({ lang }: HeaderProps) => {
       href: `/${lang}/branches`,
       slug: "branches",
     },
-    {
-      text: lang === "ar" ? "تواصل معنا" : "Contact Us",
-      href: `/${lang}/contact`,
-      slug: "contact",
-    },
-    //   { text: t('nav.map'), href: `/${lang}/map` },
+    // {
+    //   text: lang === "ar" ? "تواصل معنا" : "Contact Us",
+    //   href: `/${lang}/contact`,
+    //   slug: "contact",
+    // },
   ];
 
   const officeLink = {
