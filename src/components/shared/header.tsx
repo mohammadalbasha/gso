@@ -51,18 +51,6 @@ export const Header = ({ lang }: HeaderProps) => {
     // },
   ];
 
-  const officeLink = {
-    ar: {
-      text: "المكاتب العقارية ",
-      href: `/${lang}/offices`,
-      slug: "offices",
-    },
-    en: {
-      text: "Offices",
-      href: `/${lang}/offices`,
-      slug: "offices",
-    },
-  };
   return (
     <>
       <div className="h-8 w-full flex justify-end bg-black top-header max-w-full">

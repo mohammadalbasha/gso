@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils/utils";
+
 const data = {
   image: "/polyurethane-300.png",
   productName: { en: "POLYURETHANE M300", ar: "POLYURETHANE M300" },
@@ -259,13 +261,23 @@ export default async function Polyurethane300Page({ params }: PageProps) {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-primary-500 text-primary-foreground">
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(
                       data.standardsAndProperties.tableHeaders.property,
                       locale,
                     )}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(
                       data.standardsAndProperties.tableHeaders.value,
                       locale,

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils/utils";
+
 const data = {
   image: "/conshield-pu.png",
   productName: { en: "CONSHIELD PU", ar: "CONSHIELD PU" },
@@ -467,10 +469,20 @@ export default async function ConshieldPUPage({ params }: PageProps) {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-primary-500 text-primary-foreground">
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(data.properties.tableHeaders.property, locale)}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(data.properties.tableHeaders.value, locale)}
                   </th>
                 </tr>
@@ -507,13 +519,28 @@ export default async function ConshieldPUPage({ params }: PageProps) {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-primary-500 text-primary-foreground">
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(data.dryingTime.data[0].temp.label, locale)}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(data.dryingTime.data[0].dryToTouch.label, locale)}
                   </th>
-                  <th className="text-left py-3 px-4 font-semibold">
+                  <th
+                    className={cn(
+                      " py-3 px-4 font-semibold",
+                      locale === "ar" ? "text-right" : "text-left",
+                    )}
+                  >
                     {text(data.dryingTime.data[0].hardDry.label, locale)}
                   </th>
                 </tr>
