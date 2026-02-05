@@ -79,7 +79,7 @@ OUTSIDE.`,
       },
       {
         label: { en: "Weight per Liter", ar: "الوزن لكل لتر" },
-        value: { en: "138 kg", ar: "138 كجم" },
+        value: { en: "1.38 kg", ar: "1.38 كجم" },
       },
       {
         label: { en: "Elongation", ar: "الاستطالة" },
@@ -91,7 +91,7 @@ OUTSIDE.`,
       },
       {
         label: { en: "Chloride Ion Diffusivity", ar: "نفاذية أيون الكلوريد" },
-        value: { en: "43 g/m²/24 h", ar: "43 جم/م²/24 ساعة" },
+        value: { en: "43 g/m²/24 h", ar: "43 جم/م² /24 ساعة" },
       },
       {
         label: { en: "Flash Point", ar: "نقطة الوميض" },
@@ -106,13 +106,13 @@ OUTSIDE.`,
       },
       {
         label: { en: "Packaging", ar: "التعبئة" },
-        value: { en: "—", ar: "—" },
+        value: { en: "17 kg drums", ar: "العبوة 17 كجم" },
       },
       {
         label: { en: "Coverage", ar: "التغطية" },
         value: {
           en: "0.6 to 0.9 kg per m² per coat",
-          ar: "0.6 إلى 0.9 كجم لكل م² لكل طبقة",
+          ar: "0.6 إلى 0.9 كجم لكل م² ",
         },
       },
     ],

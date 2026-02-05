@@ -16,7 +16,7 @@ const products = [
     image: "/conshield-pu.png",
     category: {
       en: "Insulating Materials",
-      ar: "مواد ربلية",
+      ar: "مواد عازلة",
     },
     link: "/insulating-materials/conshield-pu",
   },
@@ -25,7 +25,7 @@ const products = [
     image: "/polyurethane-300.png",
     category: {
       en: "Insulating Materials",
-      ar: "مواد ربلية",
+      ar: "مواد عازلة",
     },
     link: "/insulating-materials/polyurethane-300",
   },
@@ -162,18 +162,17 @@ export default async function Home({ params, searchParams }: Props) {
             <div className="  overflow-hidden bg-primary-50 hover:bg-white  hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48 bg-primary-500/5">
                 <Image
-                  src="/special-materials.jpg"
-                  alt={t("services.specialMaterials")}
+                  src="/waterproofing.png"
+                  alt={t("services.waterproofing")}
                   fill
-                  className="object-cover"
                 />
               </div>
               <div className="p-6 text-center">
                 <h3 className="text-xl font-semibold text-primary-500 mb-2 ">
-                  {t("services.specialMaterials")}
+                  {t("services.waterproofing")}
                 </h3>
                 <h6 className="text-xs  text-gray-900 mb-2 ">
-                  {t("services.specialMaterials")}
+                  {t("services.waterproofing")}
                 </h6>
               </div>
             </div>

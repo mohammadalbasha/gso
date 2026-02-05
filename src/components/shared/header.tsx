@@ -30,7 +30,7 @@ export const Header = ({ lang }: HeaderProps) => {
 
   const typeNavLinks = [
     {
-      text: lang === "ar" ? "مواد ربلية" : "Insulating Materials",
+      text: lang === "ar" ? "مواد خصوصية" : "Special Materials",
       href: `/${lang}/insulating-materials`,
       slug: "insulating-materials",
     },
@@ -174,7 +174,7 @@ export const Header = ({ lang }: HeaderProps) => {
         </Button> */}
 
           <Link
-            href="tel:+96556646842"
+            href="tel:+96555007977"
             className={cn(
               "flex items-center gap-2",
               buttonVariants({
@@ -188,7 +188,7 @@ export const Header = ({ lang }: HeaderProps) => {
             <FaPhone className="w-4 h-4 text-primary-500" />
           </Link>
           <Link
-            href="https://wa.me/96556646842"
+            href="https://wa.me/96555007977"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(

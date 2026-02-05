@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { FaPhone, FaEnvelope, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 
-const phones = ["+96556646842", "+96555007977"];
+const phones = ["+96555007977", "+96556646842"];
 const email = "GSOKuwait@gmail.com";
 
 export default async function ContactPage({
@@ -23,8 +23,8 @@ export default async function ContactPage({
           <h1 className="text-3xl md:text-4xl font-bold text-primary-500">
             {t("title")}
           </h1>
-          <p className="text-gray-600">{t("titleDescriptionOne")}</p>
-          <p className="text-gray-600">{t("titleDescriptionTwo")}</p>
+          <p className="text-gray-900">{t("titleDescriptionOne")}</p>
+          <p className="text-gray-900">{t("titleDescriptionTwo")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mt-8">

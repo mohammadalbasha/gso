@@ -62,7 +62,7 @@
       "subtitle": "Services",
       "buildingConstruction": "Building Construction",
       "concreteRepair": "Concrete Repair",
-      "specialMaterials": "Special Materials"
+      "waterproofing": "Waterproofing"
     },
     "products": {
       "title": "Our Products",
@@ -134,8 +134,8 @@
       "description": "Contact Us for Aqar.ME"
     },
     "title": "Contact Us",
-    "titleDescriptionOne": "نحن هنا لمساعدتكم والأجابة على استفساراتكم",
-    "titleDescriptionTwo": "يسعدنا دائماً السماع منك وسيتم الرد عليك خلال وقت قصير",
+    "titleDescriptionOne": "We are here to help you and answer your questions",
+    "titleDescriptionTwo": "We are always here to listen to you and we will respond to you within a short time",
     "name": "Name",
     "email": "Email",
     "phone": "Phone Number",

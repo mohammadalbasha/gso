@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-//import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
@@ -14,11 +14,11 @@ import { Toaster } from "@/components/ui/sonner";
 
 import { AppContext } from "@/context/app.context";
 import { ScrollPositionProvider } from "@/context/scroll.context";
-// const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-//   subsets: ["arabic"],
-//   weight: ["400", "500", "600", "700"],
-//   variable: "--font-ibm_plex_sans",
-// });
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm_plex_sans",
+});
 
 /**
  * search for open graph and canonical urls
@@ -87,11 +87,9 @@ export default async function RootLayout({
     <html lang={locale} dir={direction} className="h-full max-w-full ">
       <head></head>
 
-      {/* <body
+      <body
         className={`${ibmPlexSansArabic.variable} font-sans w-full flex flex-col  min-h-full `}
-      > */}
-      <body className={`font-sans w-full flex flex-col  min-h-full `}>
-        {" "}
+      >
         <NextIntlClientProvider>
           <AppContext>
             <ScrollPositionProvider>

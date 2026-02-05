@@ -13,9 +13,10 @@ import {
   FaXTwitter,
   FaPhone,
   FaEnvelope,
+  FaWhatsapp,
 } from "react-icons/fa6";
 
-const phones = ["+96556646842", "+96555007977"];
+const phones = ["+96555007977", "+96556646842"];
 const email = "GSOKuwait@gmail.com";
 
 const socialMedia = [
@@ -117,7 +118,7 @@ export const Footer = ({ lang }: FooterProps) => {
           {/* Contact Info */}
           <div className={cn("flex flex-col gap-6")}>
             <h3 className={cn("text-xl font-medium text-secondary-500")}>
-              {lang === "ar" ? "تواصل بنا" : "Contact Us"}
+              {lang === "ar" ? "تواصل معنا" : "Contact Us"}
             </h3>
             <div className="flex flex-col gap-3">
               {/* Phones */}
@@ -133,6 +134,15 @@ export const Footer = ({ lang }: FooterProps) => {
                   </span>
                 </Link>
               ))}
+              <Link
+                href="https://wa.me/96555007977"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-900 hover:text-primary-500 transition-colors"
+              >
+                <FaWhatsapp className="w-4 h-4 text-primary-500" />
+                <span dir="ltr">{phones[0]}</span>
+              </Link>
               {/* Email */}
               <Link
                 href={`mailto:${email}`}
