@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa6";
 
 const phones = ["+96555007977", "+96556646842"];
-const email = "GSOKuwait@gmail.com";
+const email = "info@gso.homes";
 
 const socialMedia = [
   {

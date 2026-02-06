@@ -4,7 +4,7 @@ import { FaPhone, FaEnvelope, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 
 const phones = ["+96555007977", "+96556646842"];
-const email = "GSOKuwait@gmail.com";
+const email = "info@gso.homes";
 
 export default async function ContactPage({
   params,
