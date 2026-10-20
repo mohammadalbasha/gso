@@ -2,6 +2,15 @@ import { LanguageCode } from "@/i18n/languages";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  getPublishedProducts,
+  getSiteMap,
+  localized,
+  productsOrDefault,
+  siteText,
+} from "@/lib/content/queries";
+
+export const revalidate = 0;
 
 interface Props {
   params: Promise<{
@@ -10,31 +19,13 @@ interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const products = [
-  {
-    title: "Conshield PU",
-    image: "/conshield-pu.png",
-    category: {
-      en: "Insulating Materials",
-      ar: "مواد عازلة",
-    },
-    link: "/insulating-materials/conshield-pu",
-  },
-  {
-    title: "Polyurethane 300",
-    image: "/polyurethane-300.png",
-    category: {
-      en: "Insulating Materials",
-      ar: "مواد عازلة",
-    },
-    link: "/insulating-materials/polyurethane-300",
-  },
-];
-
 export default async function Home({ params, searchParams }: Props) {
   const t = await getTranslations("home");
   const { locale } = await params;
   const isRtl = locale === "ar";
+  const site = await getSiteMap();
+  const products = productsOrDefault(await getPublishedProducts());
+  const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
   return (
     <div>
       {/* <div className="relative h-[80vh] w-full">
@@ -54,9 +45,9 @@ export default async function Home({ params, searchParams }: Props) {
         </h1>
 
         <h2 className="text-white font-semibold text-[40px] max-md:text-[30px] text-center whitespace-pre-line leading-tight [line-height:1.2]">
-          {t("hero.titleLine1")}
+          {text("home.hero.titleLine1", t("hero.titleLine1"))}
           <br />
-          {t("hero.titleLine2")}
+          {text("home.hero.titleLine2", t("hero.titleLine2"))}
         </h2>
       </div>
 
@@ -64,7 +55,7 @@ export default async function Home({ params, searchParams }: Props) {
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.6fr_1fr] gap-12 items-start">
           <div className={isRtl ? "text-right" : "text-left"}>
             <h2 className="mt-3 text-2xl md:text-3xl font-bold text-gray-900">
-              {t("aboutSection.title")}
+              {text("home.about.title", t("aboutSection.title"))}
             </h2>
             <div
               className={`flex items-center gap-2 mt-2
@@ -74,25 +65,25 @@ export default async function Home({ params, searchParams }: Props) {
               <span className="h-1 w-3 bg-secondary-500/60" />
             </div>
             <div className="mt-6 space-y-4 text-gray-700 leading-relaxed">
-              <p>{t("aboutSection.paragraph1")}</p>
-              <p>{t("aboutSection.paragraph2")}</p>
+              <p>{text("home.about.paragraph1", t("aboutSection.paragraph1"))}</p>
+              <p>{text("home.about.paragraph2", t("aboutSection.paragraph2"))}</p>
             </div>
           </div>
           <div className="space-y-12 mt-10">
             <div className="text-center">
               <h3 className="text-primary-500 font-semibold text-xl">
-                {t("aboutSection.missionTitle")}
+                {text("home.about.missionTitle", t("aboutSection.missionTitle"))}
               </h3>
               <p className="mt-2 text-gray-500 text-sm leading-relaxed">
-                {t("aboutSection.missionText")}
+                {text("home.about.missionText", t("aboutSection.missionText"))}
               </p>
             </div>
             <div className="text-center">
               <h3 className="text-primary-500 font-semibold text-xl">
-                {t("aboutSection.visionTitle")}
+                {text("home.about.visionTitle", t("aboutSection.visionTitle"))}
               </h3>
               <p className="mt-2 text-gray-500 text-sm leading-relaxed">
-                {t("aboutSection.visionText")}
+                {text("home.about.visionText", t("aboutSection.visionText"))}
               </p>
             </div>
           </div>
@@ -240,14 +231,14 @@ export default async function Home({ params, searchParams }: Props) {
           <div className="grid md:grid-cols-2 max-w-2xl w-full mx-auto gap-8">
             {products.map((product) => (
               <Link
-                href={`/${locale}${product.link}`}
-                key={product.title}
+                href={`/${locale}/insulating-materials/${product.slug}`}
+                key={product.slug}
                 className="group rounded-lg overflow-hidden bg-primary-50 hover:bg-white hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-60 bg-primary-500/5">
                   <Image
-                    src={product.image}
-                    alt={product.title}
+                    src={product.image_url || "/conshield-pu.png"}
+                    alt={localized(locale, product.name_en, product.name_ar)}
                     fill
                     className="object-cover transition-transform duration-300"
                   />
@@ -268,17 +259,17 @@ export default async function Home({ params, searchParams }: Props) {
                           !isRtl ? "rounded-r-full" : "rounded-l-full"
                         }`}
                       >
-                        {product.category[locale]}
+                        {localized(locale, product.category_en, product.category_ar)}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="text-xl font-semibold text-primary-500 mb-2">
-                    {product.title}
+                    {localized(locale, product.name_en, product.name_ar)}
                   </h3>
                   <h6 className="text-xs text-gray-900 mb-2">
-                    {product.category[locale]}
+                    {localized(locale, product.category_en, product.category_ar)}
                   </h6>
                 </div>
               </Link>

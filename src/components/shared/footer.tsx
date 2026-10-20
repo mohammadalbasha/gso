@@ -16,9 +16,6 @@ import {
   FaWhatsapp,
 } from "react-icons/fa6";
 
-const phones = ["+96555007977", "+96556646842"];
-const email = "info@gso.homes";
-
 const socialMedia = [
   {
     href: "https://x.com/getaqary",
@@ -49,9 +46,17 @@ const socialMedia = [
 
 interface FooterProps {
   lang: string;
+  phones?: string[];
+  email?: string;
+  address?: string;
 }
 
-export const Footer = ({ lang }: FooterProps) => {
+export const Footer = ({
+  lang,
+  phones = ["+96555007977", "+96556646842"],
+  email = "info@gso.homes",
+  address,
+}: FooterProps) => {
   const t = useTranslations("footer");
 
   const aboutLinks = [
@@ -135,7 +140,7 @@ export const Footer = ({ lang }: FooterProps) => {
                 </Link>
               ))}
               <Link
-                href="https://wa.me/96555007977"
+                href={`https://wa.me/${phones[0]?.replace(/\+/g, "") ?? ""}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-900 hover:text-primary-500 transition-colors"
@@ -157,9 +162,10 @@ export const Footer = ({ lang }: FooterProps) => {
                   {lang === "ar" ? "الكويت" : "Kuwait"}
                 </p>
                 <p className="text-sm text-gray-700 leading-relaxed">
-                  {lang === "ar"
-                    ? "الشويخ، شارع الزينة، مجمع حياة التجاري، محل رقم 28"
-                    : "Shuwaikh, Al Zena St, Al Hayat Commercial Complex, Shop No. 28"}
+                  {address ||
+                    (lang === "ar"
+                      ? "الشويخ، شارع الزينة، مجمع حياة التجاري، محل رقم 28"
+                      : "Shuwaikh, Al Zena St, Al Hayat Commercial Complex, Shop No. 28")}
                 </p>
               </div>
             </div>

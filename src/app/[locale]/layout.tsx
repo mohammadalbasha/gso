@@ -11,6 +11,13 @@ import { getLangDir } from "rtl-detect";
 import { LanguageCode } from "@/i18n/languages";
 import { languages } from "@/i18n/languages";
 import { Toaster } from "@/components/ui/sonner";
+import {
+  branchesOrDefault,
+  contactFromSite,
+  getPublishedBranches,
+  getSiteMap,
+  localized,
+} from "@/lib/content/queries";
 
 import { AppContext } from "@/context/app.context";
 import { ScrollPositionProvider } from "@/context/scroll.context";
@@ -82,6 +89,14 @@ export default async function RootLayout({
   }
   setRequestLocale(locale);
   const direction = getLangDir(locale);
+  const site = await getSiteMap();
+  const { phones, email } = contactFromSite(site);
+  const branch = branchesOrDefault(await getPublishedBranches()).find(
+    (item) => !item.coming_soon,
+  );
+  const address = branch
+    ? localized(locale, branch.address_en, branch.address_ar)
+    : undefined;
 
   return (
     <html lang={locale} dir={direction} className="h-full max-w-full ">
@@ -93,12 +108,12 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <AppContext>
             <ScrollPositionProvider>
-              <Header lang={locale} />
+              <Header lang={locale} phone={phones[0]} />
 
               <main className="flex-1 flex flex-col   bg-secondary-200  overflow-x-hidden ">
                 {children}
               </main>
-              <Footer lang={locale} />
+              <Footer lang={locale} phones={phones} email={email} address={address} />
 
               <Toaster />
             </ScrollPositionProvider>

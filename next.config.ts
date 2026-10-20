@@ -54,8 +54,15 @@ const nextConfig: NextConfig = {
     // ],
   },
   images: {
-    //unoptimized: true, // TODO: Remove this after testing
-    remotePatterns: [],
+    remotePatterns: process.env.SUPABASE_URL
+      ? [
+          {
+            protocol: "https",
+            hostname: new URL(process.env.SUPABASE_URL).hostname,
+            pathname: "/storage/v1/object/public/**",
+          },
+        ]
+      : [],
   },
 };
 

@@ -1,6 +1,13 @@
 import { LanguageCode } from "@/i18n/languages";
 import { getTranslations } from "next-intl/server";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import {
+  branchesOrDefault,
+  getPublishedBranches,
+  localized,
+} from "@/lib/content/queries";
+
+export const revalidate = 0;
 
 interface Props {
   params: Promise<{
@@ -12,6 +19,7 @@ interface Props {
 export default async function BranchesPage({ params, searchParams }: Props) {
   const t = await getTranslations("branches");
   const { locale } = await params;
+  const branches = branchesOrDefault(await getPublishedBranches());
 
   return (
     <div className="min-h-screen bg-white">
@@ -30,60 +38,64 @@ export default async function BranchesPage({ params, searchParams }: Props) {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mt-12">
-            {/* Kuwait Branch */}
-            <div className="bg-white rounded-lg border-2 border-primary-500/20 p-8 hover:shadow-xl transition-shadow">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <FaMapMarkerAlt className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-primary-500 mb-2">
-                    {t("kuwait")}
-                  </h2>
-                  <div className="h-1 w-12 bg-secondary-500 mb-4" />
+            {branches.map((branch) => (
+              <div
+                key={branch.id}
+                className={`bg-white rounded-lg border-2 p-8 relative overflow-hidden ${
+                  branch.coming_soon
+                    ? "border-gray-200"
+                    : "border-primary-500/20 hover:shadow-xl transition-shadow"
+                }`}
+              >
+                {branch.coming_soon ? (
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 opacity-50" />
+                ) : null}
+                <div className="relative">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        branch.coming_soon ? "bg-gray-300" : "bg-primary-500"
+                      }`}
+                    >
+                      <FaMapMarkerAlt className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2
+                        className={`text-2xl font-bold mb-2 ${
+                          branch.coming_soon ? "text-gray-500" : "text-primary-500"
+                        }`}
+                      >
+                        {localized(locale, branch.name_en, branch.name_ar)}
+                      </h2>
+                      <div
+                        className={`h-1 w-12 mb-4 ${
+                          branch.coming_soon ? "bg-gray-300" : "bg-secondary-500"
+                        }`}
+                      />
+                    </div>
+                  </div>
+                  {branch.coming_soon ? (
+                    <div className="flex items-center justify-center h-32">
+                      <p className="text-2xl font-semibold text-secondary-500">
+                        {t("comingSoon")}
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <h3 className="text-sm text-gray-500 mb-2">{t("address")}</h3>
+                      <p className="text-lg text-gray-700 leading-relaxed">
+                        {localized(locale, branch.address_en, branch.address_ar)}
+                      </p>
+                      {branch.phone ? (
+                        <p className="mt-3 text-base text-gray-700" dir="ltr">
+                          {branch.phone}
+                        </p>
+                      ) : null}
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm text-gray-500 mb-2">{t("address")}</h3>
-                  <p className="text-lg text-gray-700 leading-relaxed">
-                    {t("kuwaitAddress")}
-                  </p>
-                  <p
-                    className="text-base text-gray-600 mt-2"
-                    style={{ direction: "ltr" }}
-                  >
-                    Shuwaikh, Al Zena St, Al Hayat Commercial Complex, Shop No.
-                    28
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Syria Branch - Coming Soon */}
-            <div className="bg-white rounded-lg border-2 border-gray-200 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 opacity-50" />
-              <div className="relative">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <FaMapMarkerAlt className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-500 mb-2">
-                      {t("syria")}
-                    </h2>
-                    <div className="h-1 w-12 bg-gray-300 mb-4" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center h-32">
-                  <div className="text-center">
-                    <p className="text-2xl font-semibold text-secondary-500">
-                      {t("comingSoon")}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

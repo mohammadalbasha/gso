@@ -18,9 +18,10 @@ import { useEffect, useTransition } from "react";
 
 interface HeaderProps {
   lang: LanguageCode;
+  phone?: string;
 }
 
-export const Header = ({ lang }: HeaderProps) => {
+export const Header = ({ lang, phone = "+96555007977" }: HeaderProps) => {
   const t = useTranslations("header");
   const pathname = usePathname();
   const router = useRouter();
@@ -161,7 +162,7 @@ export const Header = ({ lang }: HeaderProps) => {
         </Button> */}
 
           <Link
-            href="tel:+96555007977"
+            href={`tel:${phone}`}
             className={cn(
               "flex items-center gap-2",
               buttonVariants({
@@ -175,7 +176,7 @@ export const Header = ({ lang }: HeaderProps) => {
             <FaPhone className="w-4 h-4 text-primary-500" />
           </Link>
           <Link
-            href="https://wa.me/96555007977"
+            href={`https://wa.me/${phone.replace(/\+/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(

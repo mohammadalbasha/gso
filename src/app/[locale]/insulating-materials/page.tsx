@@ -3,6 +3,13 @@ import { cn } from "@/lib/utils/utils";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  getPublishedProducts,
+  localized,
+  productsOrDefault,
+} from "@/lib/content/queries";
+
+export const revalidate = 0;
 
 interface Props {
   params: Promise<{
@@ -11,27 +18,6 @@ interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const products = [
-  {
-    title: "Conshield PU",
-    image: "/conshield-pu.png",
-    category: {
-      en: "Insulating Materials",
-      ar: "مواد ربلية",
-    },
-    link: "/insulating-materials/conshield-pu",
-  },
-  {
-    title: "Polyurethane 300",
-    image: "/polyurethane-300.png",
-    category: {
-      en: "Insulating Materials",
-      ar: "مواد ربلية",
-    },
-    link: "/insulating-materials/polyurethane-300",
-  },
-];
-
 export default async function InsulatingMaterialsPage({
   params,
   searchParams,
@@ -39,6 +25,7 @@ export default async function InsulatingMaterialsPage({
   const t = await getTranslations("insulatingMaterials");
   const { locale } = await params;
   const isRtl = locale === "ar";
+  const products = productsOrDefault(await getPublishedProducts());
 
   return (
     <div className="min-h-screen bg-gray-200">
@@ -62,14 +49,14 @@ export default async function InsulatingMaterialsPage({
           <div className="grid md:grid-cols-2 max-w-2xl w-full mx-auto gap-8">
             {products.map((product) => (
               <Link
-                href={`/${locale}${product.link}`}
-                key={product.title}
+                href={`/${locale}/insulating-materials/${product.slug}`}
+                key={product.slug}
                 className="group rounded-lg overflow-hidden bg-primary-50 hover:bg-white hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-60 bg-primary-500/5">
                   <Image
-                    src={product.image}
-                    alt={product.title}
+                    src={product.image_url || "/conshield-pu.png"}
+                    alt={localized(locale, product.name_en, product.name_ar)}
                     fill
                     className="object-cover transition-transform duration-300"
                   />
@@ -82,7 +69,7 @@ export default async function InsulatingMaterialsPage({
                           isRtl ? "rounded-r-full" : "rounded-l-full",
                         )}
                       >
-                        {product.category[locale]}
+                        {localized(locale, product.category_en, product.category_ar)}
                       </div>
                       <div
                         className={cn(
@@ -97,10 +84,10 @@ export default async function InsulatingMaterialsPage({
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="text-xl font-semibold text-primary-500 mb-2">
-                    {product.title}
+                    {localized(locale, product.name_en, product.name_ar)}
                   </h3>
                   <h6 className="text-xs text-gray-900 mb-2">
-                    {product.category[locale]}
+                    {localized(locale, product.category_en, product.category_ar)}
                   </h6>
                 </div>
               </Link>

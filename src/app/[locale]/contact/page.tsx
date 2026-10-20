@@ -3,8 +3,12 @@ import { getTranslations } from "next-intl/server";
 import { FaPhone, FaEnvelope, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 
-const phones = ["+96555007977", "+96556646842"];
-const email = "info@gso.homes";
+import {
+  contactFromSite,
+  getSiteMap,
+} from "@/lib/content/queries";
+
+export const revalidate = 0;
 
 export default async function ContactPage({
   params,
@@ -15,6 +19,7 @@ export default async function ContactPage({
 }) {
   const t = await getTranslations("contact");
   const { locale } = await params;
+  const { phones, email } = contactFromSite(await getSiteMap());
 
   return (
     <div className="flex flex-col gap-10 w-full min-h-screen items-center py-16 px-6">

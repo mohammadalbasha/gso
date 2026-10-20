@@ -1,16 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "../actions";
 import { Button } from "@/components/ui/button";
+import { AdminNav } from "@/components/admin/admin-nav";
 
 export const dynamic = "force-dynamic";
-
-const nav = [
-  { label: "Overview", href: "/admin", active: true },
-  { label: "Projects", href: null },
-  { label: "Products", href: null },
-  { label: "Branches", href: null },
-  { label: "Site text", href: null },
-];
 
 export default async function AdminPanelLayout({
   children,
@@ -35,27 +28,7 @@ export default async function AdminPanelLayout({
           </p>
           <p className="mt-1 text-sm text-white/70">Content dashboard</p>
         </div>
-        <nav className="flex flex-1 flex-col gap-1 px-3 py-4">
-          {nav.map((item) =>
-            item.href ? (
-              <a
-                key={item.label}
-                href={item.href}
-                className="rounded-md bg-white/10 px-3 py-2 text-sm font-medium"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <span
-                key={item.label}
-                className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-white/45"
-              >
-                {item.label}
-                <span className="text-[10px] uppercase tracking-wide">Soon</span>
-              </span>
-            ),
-          )}
-        </nav>
+        <AdminNav />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-gray-300 bg-white px-6 py-4">

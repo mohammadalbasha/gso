@@ -1,11 +1,14 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { getSiteMap, siteText } from "@/lib/content/queries";
 
 export const revalidate = 0;
 
 export default async function AboutUsPage() {
   const t = await getTranslations("about");
+  const locale = await getLocale();
+  const site = await getSiteMap();
+  const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
 
   return (
     <div className="min-h-full bg-gradient-to-br from-secondary-50 via-primary-50 to-primary-100">
@@ -22,7 +25,7 @@ export default async function AboutUsPage() {
               {t("title")}
             </Badge> */}
             <h1 className="text-3xl p-2 md:text-4xl font-bold bg-gradient-to-r from-secondary-900 via-primary-600 to-primary-500 bg-clip-text text-transparent leading-tight">
-              {t("title")}
+              {text("about.title", t("title"))}
             </h1>
             {/* <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-primary-600 mx-auto rounded-full"></div> */}
           </div>
@@ -43,7 +46,7 @@ export default async function AboutUsPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-lg leading-relaxed text-secondary-700 font-medium">
-                    {t("firstParagraph")}
+                    {text("about.firstParagraph", t("firstParagraph"))}
                   </p>
                 </div>
               </div>
@@ -59,7 +62,7 @@ export default async function AboutUsPage() {
                     <span className="text-white font-bold text-sm">2</span>
                   </div>
                   <p className="text-secondary-700 font-medium leading-relaxed">
-                    {t("secondParagraph")}
+                    {text("about.secondParagraph", t("secondParagraph"))}
                   </p>
                 </div>
               </CardContent>
@@ -72,7 +75,7 @@ export default async function AboutUsPage() {
                     <span className="text-white font-bold text-sm">3</span>
                   </div>
                   <p className="text-secondary-700 font-medium leading-relaxed">
-                    {t("thirdParagraph")}
+                    {text("about.thirdParagraph", t("thirdParagraph"))}
                   </p>
                 </div>
               </CardContent>
@@ -107,10 +110,10 @@ export default async function AboutUsPage() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold mb-4">
-                    {t("visionTitle")}
+                    {text("about.visionTitle", t("visionTitle"))}
                   </h2>
                   <p className="text-lg leading-relaxed text-primary-100 font-medium">
-                    {t("visionDescription")}
+                    {text("about.visionDescription", t("visionDescription"))}
                   </p>
                 </div>
               </div>
