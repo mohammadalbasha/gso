@@ -1,4 +1,5 @@
 import type {
+  ServiceRow,
   BranchRow,
   ProductBlock,
   ProductRow,
@@ -557,6 +558,29 @@ export const defaultBranches: BranchRow[] = [
   },
 ];
 
+const service = (
+  id: string,
+  title_en: string,
+  title_ar: string,
+  image_url: string,
+  sort_order: number,
+): ServiceRow => ({
+  id,
+  title_en,
+  title_ar,
+  subtitle_en: "",
+  subtitle_ar: "",
+  image_url,
+  sort_order,
+  published: true,
+});
+
+export const defaultServices: ServiceRow[] = [
+  service("local-building", "Building Construction", "تشييد المباني", "/building-construction.png", 1),
+  service("local-concrete", "Concrete Repair", "اصلاح الخرسانة", "/concrete-repair.jpg", 2),
+  service("local-waterproofing", "Waterproofing", "عزل مائي", "/waterproofing.png", 3),
+];
+
 export const defaultSiteContent: { key: string; value_en: string; value_ar: string }[] = [
   {
     key: "home.hero.titleLine1",
@@ -610,6 +634,8 @@ export const defaultSiteContent: { key: string; value_en: string; value_ar: stri
       "To be the leading company in waterproofing and specialized building materials in the region.",
     value_ar: "أن نكون الشركة الرائدة في مجال العزل المائي ومواد البناء المتخصصة في المنطقة.",
   },
+  { key: "home.services.title", value_en: "Our Services", value_ar: "خدماتنا" },
+  { key: "home.services.subtitle", value_en: "Services", value_ar: "الخدمات" },
   { key: "about.title", value_en: "About Us", value_ar: "من نحن" },
   {
     key: "about.firstParagraph",
@@ -662,6 +688,8 @@ export const siteFields: SiteField[] = [
   { key: "home.about.missionText", label: "Mission text", multiline: true },
   { key: "home.about.visionTitle", label: "Home vision title" },
   { key: "home.about.visionText", label: "Home vision text", multiline: true },
+  { key: "home.services.title", label: "Services section title" },
+  { key: "home.services.subtitle", label: "Services section subtitle" },
   { key: "about.title", label: "About page title" },
   { key: "about.firstParagraph", label: "About paragraph 1", multiline: true },
   { key: "about.secondParagraph", label: "About paragraph 2", multiline: true },

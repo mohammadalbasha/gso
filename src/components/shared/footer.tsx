@@ -44,19 +44,22 @@ const socialMedia = [
   },
 ];
 
-interface FooterProps {
-  lang: string;
-  phones?: string[];
-  email?: string;
-  address?: string;
+export interface FooterBranch {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
 }
 
-export const Footer = ({
-  lang,
-  phones = ["+96555007977", "+96556646842"],
-  email = "info@gso.homes",
-  address,
-}: FooterProps) => {
+interface FooterProps {
+  lang: string;
+  phones: string[];
+  email: string;
+  branches: FooterBranch[];
+}
+
+export const Footer = ({ lang, phones, email, branches }: FooterProps) => {
   const t = useTranslations("footer");
 
   const aboutLinks = [
@@ -156,18 +159,33 @@ export const Footer = ({
                 <FaEnvelope className="w-4 h-4 text-secondary-500" />
                 <span className="text-gray-900">{email}</span>
               </Link>
-              {/* Branch Address */}
-              <div className="mt-2 pt-2 border-t border-gray-200">
-                <p className="text-sm font-medium text-primary-500 mb-1">
-                  {lang === "ar" ? "الكويت" : "Kuwait"}
-                </p>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  {address ||
-                    (lang === "ar"
-                      ? "الشويخ، شارع الزينة، مجمع حياة التجاري، محل رقم 28"
-                      : "Shuwaikh, Al Zena St, Al Hayat Commercial Complex, Shop No. 28")}
-                </p>
-              </div>
+              {/* Branches */}
+              {branches.map((branch) => (
+                <div key={branch.id} className="mt-2 pt-2 border-t border-gray-200">
+                  <p className="text-sm font-medium text-primary-500 mb-1">{branch.name}</p>
+                  {branch.address ? (
+                    <p className="text-sm text-gray-700 leading-relaxed">{branch.address}</p>
+                  ) : null}
+                  {branch.phone ? (
+                    <Link
+                      href={`tel:${branch.phone}`}
+                      className="mt-1 flex items-center gap-2 text-sm text-gray-700 hover:text-primary-500 transition-colors"
+                    >
+                      <FaPhone className="w-3 h-3 text-primary-500" />
+                      <span dir="ltr">{branch.phone}</span>
+                    </Link>
+                  ) : null}
+                  {branch.email ? (
+                    <Link
+                      href={`mailto:${branch.email}`}
+                      className="mt-1 flex items-center gap-2 text-sm text-gray-700 hover:text-primary-500 transition-colors"
+                    >
+                      <FaEnvelope className="w-3 h-3 text-secondary-500" />
+                      <span>{branch.email}</span>
+                    </Link>
+                  ) : null}
+                </div>
+              ))}
             </div>
           </div>
 

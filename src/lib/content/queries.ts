@@ -3,9 +3,17 @@ import {
   defaultBranches,
   defaultProducts,
   defaultProjects,
+  defaultServices,
   defaultSiteContent,
 } from "./defaults";
-import type { BranchRow, ProductBlock, ProductRow, ProjectRow, SiteRow } from "./types";
+import type {
+  BranchRow,
+  ProductBlock,
+  ProductRow,
+  ProjectRow,
+  ServiceRow,
+  SiteRow,
+} from "./types";
 
 function isMissingTable(error: { code?: string; message?: string } | null) {
   return (
@@ -84,6 +92,21 @@ export async function getPublishedBranches(): Promise<BranchRow[] | null> {
   }
 }
 
+export async function getPublishedServices(): Promise<ServiceRow[] | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("services")
+      .select("*")
+      .eq("published", true)
+      .order("sort_order");
+    if (error) return null;
+    return (data ?? []) as ServiceRow[];
+  } catch {
+    return null;
+  }
+}
+
 export async function getSiteMap(): Promise<Record<string, SiteRow> | null> {
   try {
     const supabase = await createClient();
@@ -151,4 +174,8 @@ export function productsOrDefault(rows: ProductRow[] | null) {
 
 export function branchesOrDefault(rows: BranchRow[] | null) {
   return rows ?? defaultBranches;
+}
+
+export function servicesOrDefault(rows: ServiceRow[] | null) {
+  return rows ?? defaultServices;
 }

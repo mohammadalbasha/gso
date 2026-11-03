@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const sections = [
+  { title: "Services", href: "/admin/services", description: "Edit the service cards shown on the home page." },
   { title: "Projects", href: "/admin/projects", description: "Add, edit, and hide the work shown on the projects page." },
   { title: "Products", href: "/admin/products", description: "Control product names, photos, and detail sections." },
   { title: "Branches", href: "/admin/branches", description: "Update addresses, phones, and which branches are open." },

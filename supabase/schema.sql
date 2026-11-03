@@ -130,3 +130,26 @@ create policy "admins update images"
 create policy "admins delete images"
   on storage.objects for delete to authenticated
   using (bucket_id = 'images' and public.is_admin());
+
+-- Services (home page)
+create table public.services (
+  id uuid primary key default gen_random_uuid(),
+  title_en text not null,
+  title_ar text not null,
+  subtitle_en text,
+  subtitle_ar text,
+  image_url text,
+  sort_order int not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+alter table public.services enable row level security;
+
+create policy "public read published services"
+  on public.services for select to anon, authenticated
+  using (published or public.is_admin());
+
+create policy "admins write services"
+  on public.services for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());

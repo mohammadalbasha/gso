@@ -97,3 +97,14 @@ export type SiteField = {
   label: string;
   multiline?: boolean;
 };
+
+export type ServiceRow = {
+  id: string;
+  title_en: string;
+  title_ar: string;
+  subtitle_en: string | null;
+  subtitle_ar: string | null;
+  image_url: string | null;
+  sort_order: number;
+  published: boolean;
+};

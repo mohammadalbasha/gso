@@ -68,10 +68,50 @@ export async function saveProject(formData: FormData) {
 
 export async function deleteProject(formData: FormData) {
   const supabase = await adminClient();
-  const { error } = await supabase.from("projects").delete().eq("id", text(formData, "id"));
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", text(formData, "id"));
   if (error) throw new Error(error.message);
   revalidateSite();
   redirect("/admin/projects");
+}
+
+export async function saveService(formData: FormData) {
+  const supabase = await adminClient();
+  const id = text(formData, "id");
+  const imageUrl = await imageFromForm(
+    supabase,
+    formData,
+    "services",
+    text(formData, "image_url"),
+  );
+  const row = {
+    title_en: text(formData, "title_en"),
+    title_ar: text(formData, "title_ar"),
+    subtitle_en: text(formData, "subtitle_en"),
+    subtitle_ar: text(formData, "subtitle_ar"),
+    image_url: imageUrl,
+    sort_order: Number(text(formData, "sort_order") || 0),
+    published: checked(formData, "published"),
+  };
+  const result = id
+    ? await supabase.from("services").update(row).eq("id", id)
+    : await supabase.from("services").insert(row);
+  if (result.error) throw new Error(result.error.message);
+  revalidateSite();
+  redirect("/admin/services");
+}
+
+export async function deleteService(formData: FormData) {
+  const supabase = await adminClient();
+  const { error } = await supabase
+    .from("services")
+    .delete()
+    .eq("id", text(formData, "id"));
+  if (error) throw new Error(error.message);
+  revalidateSite();
+  redirect("/admin/services");
 }
 
 export async function saveProduct(formData: FormData) {
@@ -113,7 +153,10 @@ export async function saveProduct(formData: FormData) {
 
 export async function deleteProduct(formData: FormData) {
   const supabase = await adminClient();
-  const { error } = await supabase.from("products").delete().eq("id", text(formData, "id"));
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", text(formData, "id"));
   if (error) throw new Error(error.message);
   revalidateSite();
   redirect("/admin/products");
@@ -143,7 +186,10 @@ export async function saveBranch(formData: FormData) {
 
 export async function deleteBranch(formData: FormData) {
   const supabase = await adminClient();
-  const { error } = await supabase.from("branches").delete().eq("id", text(formData, "id"));
+  const { error } = await supabase
+    .from("branches")
+    .delete()
+    .eq("id", text(formData, "id"));
   if (error) throw new Error(error.message);
   revalidateSite();
   redirect("/admin/branches");

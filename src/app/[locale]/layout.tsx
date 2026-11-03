@@ -91,12 +91,15 @@ export default async function RootLayout({
   const direction = getLangDir(locale);
   const site = await getSiteMap();
   const { phones, email } = contactFromSite(site);
-  const branch = branchesOrDefault(await getPublishedBranches()).find(
-    (item) => !item.coming_soon,
-  );
-  const address = branch
-    ? localized(locale, branch.address_en, branch.address_ar)
-    : undefined;
+  const branches = branchesOrDefault(await getPublishedBranches())
+    .filter((item) => !item.coming_soon)
+    .map((item) => ({
+      id: item.id,
+      name: localized(locale, item.name_en, item.name_ar),
+      address: localized(locale, item.address_en, item.address_ar),
+      phone: item.phone ?? "",
+      email: item.email ?? "",
+    }));
 
   return (
     <html lang={locale} dir={direction} className="h-full max-w-full ">
@@ -113,7 +116,7 @@ export default async function RootLayout({
               <main className="flex-1 flex flex-col   bg-secondary-200  overflow-x-hidden ">
                 {children}
               </main>
-              <Footer lang={locale} phones={phones} email={email} address={address} />
+              <Footer lang={locale} phones={phones} email={email} branches={branches} />
 
               <Toaster />
             </ScrollPositionProvider>

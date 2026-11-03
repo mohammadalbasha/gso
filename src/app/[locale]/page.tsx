@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   getPublishedProducts,
+  getPublishedServices,
   getSiteMap,
   localized,
   productsOrDefault,
+  servicesOrDefault,
   siteText,
 } from "@/lib/content/queries";
 
@@ -25,6 +27,7 @@ export default async function Home({ params, searchParams }: Props) {
   const isRtl = locale === "ar";
   const site = await getSiteMap();
   const products = productsOrDefault(await getPublishedProducts());
+  const services = servicesOrDefault(await getPublishedServices());
   const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
   return (
     <div>
@@ -91,120 +94,53 @@ export default async function Home({ params, searchParams }: Props) {
       </section>
 
       {/* Services Section */}
-      <section className="bg-primary-50 py-16">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4 items-center ">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-black">
-              {t("services.title")}
-            </h2>
-            <div className="flex flex-col gap-2 items-center">
-              <h6 className="text-xs text-gray-900">
-                {t("services.subtitle")}
-              </h6>
-              <div
-                className={`flex items-center gap-2 
-              `}
-              >
-                <span className="h-1 w-6 bg-secondary-500" />
-                <span className="h-1 w-3 bg-secondary-500/60" />
-                <span className="h-1 w-6 bg-secondary-500" />
+      {services.length > 0 ? (
+        <section className="bg-primary-50 py-16">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
+            <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4 items-center ">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-black">
+                {text("home.services.title", t("services.title"))}
+              </h2>
+              <div className="flex flex-col gap-2 items-center">
+                <h6 className="text-xs text-gray-900">
+                  {text("home.services.subtitle", t("services.subtitle"))}
+                </h6>
+                <div className="flex items-center gap-2">
+                  <span className="h-1 w-6 bg-secondary-500" />
+                  <span className="h-1 w-3 bg-secondary-500/60" />
+                  <span className="h-1 w-6 bg-secondary-500" />
+                </div>
               </div>
             </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {services.map((service) => {
+                const title = localized(locale, service.title_en, service.title_ar);
+                const subtitle = localized(locale, service.subtitle_en, service.subtitle_ar);
+                return (
+                  <div
+                    key={service.id}
+                    className="overflow-hidden bg-primary-50 hover:bg-white hover:shadow-xl transition-shadow duration-300"
+                  >
+                    <div className="relative h-48 bg-primary-500/5">
+                      {service.image_url ? (
+                        <Image src={service.image_url} alt={title} fill className="object-cover" />
+                      ) : null}
+                    </div>
+                    <div className="p-6 text-center">
+                      <h3 className="text-xl font-semibold text-primary-500 mb-2">{title}</h3>
+                      {subtitle ? (
+                        <h6 className="text-xs text-gray-900 mb-2">{subtitle}</h6>
+                      ) : null}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <span className="w-10 h-2 bg-primary-500 mx-auto" />
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Building Construction */}
-            <div className="  overflow-hidden bg-primary-50 hover:bg-white  hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-48 bg-primary-500/5">
-                <Image
-                  src="/building-construction.png"
-                  alt={t("services.buildingConstruction")}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold text-primary-500 mb-2 ">
-                  {t("services.buildingConstruction")}
-                </h3>
-                <h6 className="text-xs  text-gray-900 mb-2 ">
-                  {t("services.buildingConstruction")}
-                </h6>
-              </div>
-            </div>
-            <div className="  overflow-hidden bg-primary-50 hover:bg-white  hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-48 bg-primary-500/5">
-                <Image
-                  src="/concrete-repair.jpg"
-                  alt={t("services.concreteRepair")}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold text-primary-500 mb-2 ">
-                  {t("services.concreteRepair")}
-                </h3>
-                <h6 className="text-xs  text-gray-900 mb-2 ">
-                  {t("services.concreteRepair")}
-                </h6>
-              </div>
-            </div>
-            <div className="  overflow-hidden bg-primary-50 hover:bg-white  hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-48 bg-primary-500/5">
-                <Image
-                  src="/waterproofing.png"
-                  alt={t("services.waterproofing")}
-                  fill
-                />
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold text-primary-500 mb-2 ">
-                  {t("services.waterproofing")}
-                </h3>
-                <h6 className="text-xs  text-gray-900 mb-2 ">
-                  {t("services.waterproofing")}
-                </h6>
-              </div>
-            </div>
-
-            {/* Concrete Repair */}
-            {/* <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-48 bg-primary-500/5">
-                <Image
-                  src="/concrete-repair.jpg"
-                  alt={t("services.concreteRepair")}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-primary-500 mb-2">
-                  {t("services.concreteRepair")}
-                </h3>
-              </div>
-            </div> */}
-
-            {/* Special Materials */}
-            {/* <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-48 bg-primary-500/5">
-                <Image
-                  src="/special-materials.jpg"
-                  alt={t("services.specialMaterials")}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-primary-500 mb-2">
-                  {t("services.specialMaterials")}
-                </h3>
-              </div>
-            </div> */}
-          </div>
-          <span className="w-10 h-2 bg-primary-500 mx-auto" />
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Products Section */}
       <section className="bg-white py-16">

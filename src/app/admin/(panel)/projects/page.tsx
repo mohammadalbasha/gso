@@ -1,7 +1,9 @@
+import { Pencil, Plus } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { deleteProject } from "../content-actions";
 import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/admin/delete-button";
 
 export const dynamic = "force-dynamic";
 
@@ -17,31 +19,41 @@ export default async function ProjectsAdminPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-primary-500">Projects</h1>
         <Button asChild>
-          <Link href="/admin/projects/new">Add project</Link>
+          <Link href="/admin/projects/new">
+            <Plus />
+            Add project
+          </Link>
         </Button>
       </div>
       {error ? (
         <p className="rounded-md bg-secondary-50 px-4 py-3 text-sm text-secondary-800">
-          The projects table is not ready. Run `supabase/schema.sql` in the Supabase SQL Editor, then reload this page.
+          The projects table is not ready. Run `supabase/schema.sql` in the
+          Supabase SQL Editor, then reload this page.
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border border-gray-300 bg-white">
           {(data ?? []).map((project) => (
-            <div key={project.id} className="flex items-center justify-between gap-4 border-b border-gray-200 px-4 py-3 last:border-0">
+            <div
+              key={project.id}
+              className="flex items-center justify-between gap-4 border-b border-gray-200 px-4 py-3 last:border-0"
+            >
               <div>
                 <p className="font-medium">{project.title_en}</p>
                 <p className="text-sm text-gray-700">{project.title_ar}</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button asChild variant="outline">
-                  <Link href={`/admin/projects/${project.id}`}>Edit</Link>
+                  <Link href={`/admin/projects/${project.id}`}>
+                    <Pencil />
+                    Edit
+                  </Link>
                 </Button>
-                <form action={deleteProject}>
-                  <input type="hidden" name="id" value={project.id} />
-                  <Button type="submit" variant="outline">
-                    Delete
-                  </Button>
-                </form>
+                <DeleteButton
+                  action={deleteProject}
+                  id={project.id}
+                  itemType="project"
+                  itemName={project.title_en}
+                />
               </div>
             </div>
           ))}
