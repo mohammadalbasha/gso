@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { documentsBucket, imageFromForm, uploadImage } from "@/lib/storage";
+import { documentsBucket, getBucketName, imageFromForm, uploadImage } from "@/lib/storage";
 import type { ProductBlock } from "@/lib/content/types";
 import { siteFields } from "@/lib/content/defaults";
 
@@ -251,6 +251,8 @@ export async function savePartner(formData: FormData) {
     description_ar: text(formData, "description_ar"),
     logo_url: logoUrl,
     image_url: imageUrl,
+    video_url: text(formData, "video_url") || null,
+    documentary_url: text(formData, "documentary_url") || null,
     website: text(formData, "website"),
     phone: text(formData, "phone"),
     email: text(formData, "email"),
@@ -263,6 +265,20 @@ export async function savePartner(formData: FormData) {
   if (result.error) throw new Error(result.error.message);
   revalidateSite();
   redirect(`/admin/partners/${result.data.id}`);
+}
+
+/**
+ * Videos are too large to send through a server action, so the browser uploads
+ * straight to storage using this one-time URL. The form then saves publicUrl.
+ */
+export async function createPartnerVideoUpload(extension: string) {
+  const supabase = await adminClient();
+  const ext = extension.toLowerCase() === "webm" ? "webm" : "mp4";
+  const path = `partners/${crypto.randomUUID()}.${ext}`;
+  const bucket = supabase.storage.from(getBucketName());
+  const { data, error } = await bucket.createSignedUploadUrl(path);
+  if (error) throw new Error(error.message);
+  return { signedUrl: data.signedUrl, publicUrl: bucket.getPublicUrl(path).data.publicUrl };
 }
 
 export async function deletePartner(formData: FormData) {

@@ -275,3 +275,18 @@ html body[data-scroll-locked]:not([data-scroll-no-lock]) {
 .gm-style-iw-c {
   min-width: 420px !important;
 }
+
+/* Scroll reveal (components/shared/reveal.tsx). Printed pages and browsers without JS show everything. */
+@media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}

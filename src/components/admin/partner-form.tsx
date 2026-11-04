@@ -5,6 +5,7 @@ import { savePartner } from "@/app/admin/(panel)/content-actions";
 import type { PartnerRow } from "@/lib/content/types";
 import { Card, PairInput } from "./form-parts";
 import { ImageUpload } from "./image-upload";
+import { VideoUpload } from "./video-upload";
 
 function TextInput({
   label,
@@ -98,7 +99,7 @@ export function PartnerForm({ partner }: { partner?: PartnerRow }) {
         </div>
       </Card>
 
-      <Card title="Images & visibility">
+      <Card title="Media & visibility">
         <div className="grid gap-6">
           <ImageUpload
             currentUrl={partner?.logo_url}
@@ -110,6 +111,17 @@ export function PartnerForm({ partner }: { partner?: PartnerRow }) {
             currentUrl={partner?.image_url}
             label="Cover image"
             maxMb={4}
+          />
+          <VideoUpload
+            currentUrl={partner?.video_url}
+            label="Cover video"
+            hint="Plays muted on a loop at the top of the page."
+          />
+          <VideoUpload
+            currentUrl={partner?.documentary_url}
+            label="Documentary"
+            name="documentary"
+            hint="Opens with sound when a visitor clicks to watch it."
           />
           <label className="flex items-center gap-2 border-t border-gray-100 pt-4 text-sm">
             <input

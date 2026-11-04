@@ -166,6 +166,8 @@ export type PartnerRow = {
   description_ar: string | null;
   logo_url: string | null;
   image_url: string | null;
+  video_url: string | null;
+  documentary_url: string | null;
   website: string | null;
   phone: string | null;
   email: string | null;

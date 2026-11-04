@@ -18,7 +18,7 @@ export function PartnerCard({
   return (
     <Link
       href={`/${locale}/partners/${partner.slug}`}
-      className="group flex w-full flex-col overflow-hidden rounded-xl border border-primary-500/10 border-t-4 border-t-secondary-500 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)]"
+      className="group flex flex-col overflow-hidden rounded-xl border border-primary-500/10 border-t-4 border-t-secondary-500 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       <div className="relative h-36 border-b border-primary-500/10">
         {image ? (

@@ -70,11 +70,6 @@ export const Footer = ({ lang, phones, email, branches }: FooterProps) => {
       href: `/${lang}/projects`,
     },
     { id: 3, text: t("branches"), href: `/${lang}/branches` },
-    {
-      id: 7,
-      text: lang === "ar" ? "التراخيص" : "Licenses",
-      href: `/${lang}/licenses`,
-    },
     { id: 4, text: t("contactUs"), href: `/${lang}/contact` },
     { id: 5, text: t("privacyPolicy"), href: `/${lang}/privacy` },
     { id: 6, text: t("termsOfUse"), href: `/${lang}/terms` },

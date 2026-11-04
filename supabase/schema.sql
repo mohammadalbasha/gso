@@ -168,6 +168,8 @@ create table if not exists public.partners (
   description_ar text,
   logo_url text,
   image_url text,
+  video_url text,
+  documentary_url text,
   website text,
   phone text,
   email text,
