@@ -45,6 +45,11 @@ export const Header = ({ lang, phone = "+96555007977" }: HeaderProps) => {
       href: `/${lang}/branches`,
       slug: "branches",
     },
+    {
+      text: lang === "ar" ? "التراخيص" : "Licenses",
+      href: `/${lang}/licenses`,
+      slug: "licenses",
+    },
     // {
     //   text: lang === "ar" ? "تواصل معنا" : "Contact Us",
     //   href: `/${lang}/contact`,

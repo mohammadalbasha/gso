@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import {
+  BadgeCheck,
   Building2,
   FileText,
   Files,
@@ -21,6 +22,7 @@ const links = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/partners", label: "Partners", icon: Handshake },
   { href: "/admin/documents", label: "PDFs", icon: Files },
+  { href: "/admin/licenses", label: "Licenses", icon: BadgeCheck },
   { href: "/admin/branches", label: "Branches", icon: MapPin },
   { href: "/admin/site", label: "Site text", icon: FileText },
 ];

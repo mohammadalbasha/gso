@@ -44,6 +44,24 @@ export type ProductBlock =
       steps: { en: string; ar: string }[];
     }
   | {
+      type: "badges";
+      label_en: string;
+      label_ar: string;
+      variant: "solid" | "soft" | "outline";
+      items: { en: string; ar: string }[];
+    }
+  | {
+      type: "stats";
+      label_en: string;
+      label_ar: string;
+      items: {
+        value_en: string;
+        value_ar: string;
+        label_en: string;
+        label_ar: string;
+      }[];
+    }
+  | {
       type: "image";
       label_en: string;
       label_ar: string;
@@ -193,3 +211,32 @@ export type DocumentSectionRow = {
 };
 
 export type DocumentOwner = { partnerId?: string; productId?: string };
+
+export type LicenseRow = {
+  id: string;
+  title_en: string;
+  title_ar: string;
+  file_path: string;
+  url: string;
+  sort_order: number;
+  published: boolean;
+};
+
+export type PartnerSolutionRow = {
+  id: string;
+  partner_id: string;
+  slug: string;
+  eyebrow_en: string | null;
+  eyebrow_ar: string | null;
+  title_en: string;
+  title_ar: string;
+  summary_en: string | null;
+  summary_ar: string | null;
+  intro_en: string | null;
+  intro_ar: string | null;
+  image_url: string | null;
+  image_url_ar: string | null;
+  blocks: ProductBlock[];
+  sort_order: number;
+  published: boolean;
+};

@@ -177,12 +177,27 @@
     }
   },
   "partners": {
-    "title": "Our Partners",
-    "subtitle": "Partners",
+    "title": "Our Agencies",
+    "subtitle": "Companies we represent in Kuwait",
+    "agencyNotice": "Global Observatory Company is the agent for {name} in the State of Kuwait.",
     "visit": "View profile",
     "products": "Products",
     "documents": "Documents",
     "website": "Website",
+    "viewPdf": "View PDF",
+    "close": "Close",
+    "solutions": "Waterproofing Solutions & Methods",
+    "readMore": "Read more",
     "back": "Back to {name}"
+  },
+  "licenses": {
+    "metadata": {
+      "title": "Licenses - Global Observatory Company",
+      "description": "View the licenses of Global Observatory Company."
+    },
+    "title": "Licenses",
+    "empty": "No licenses have been added yet.",
+    "view": "View PDF",
+    "close": "Close"
   }
 }

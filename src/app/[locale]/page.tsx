@@ -219,9 +219,9 @@ export default async function Home({ params, searchParams }: Props) {
         </div>
       </section>
 
-      {/* Partners Section */}
+      {/* Agencies Section */}
       {partners.length > 0 ? (
-        <section className="bg-white pb-16">
+        <section className="bg-primary-50 py-16">
           <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
             <div className="flex flex-col gap-4 items-center">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-black">
@@ -238,7 +238,7 @@ export default async function Home({ params, searchParams }: Props) {
                 </div>
               </div>
             </div>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap justify-center gap-8">
               {partners.map((partner) => (
                 <PartnerCard
                   key={partner.id}

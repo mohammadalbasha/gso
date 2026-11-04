@@ -300,6 +300,66 @@ create policy "admins delete documents"
 
 insert into public.site_content (key, value_en, value_ar)
 values
-  ('home.partners.title', 'Our Partners', 'شركاؤنا'),
-  ('home.partners.subtitle', 'Partners', 'الشركاء')
+  ('home.partners.title', 'Our Agencies', 'وكالاتنا'),
+  ('home.partners.subtitle', 'Companies we represent in Kuwait', 'الشركات التي نمثلها في الكويت')
 on conflict (key) do nothing;
+
+-- Licenses page
+create table if not exists public.licenses (
+  id uuid primary key default gen_random_uuid(),
+  title_en text not null,
+  title_ar text not null,
+  file_path text not null,
+  sort_order int not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+alter table public.licenses enable row level security;
+
+drop policy if exists "public read published licenses" on public.licenses;
+create policy "public read published licenses"
+  on public.licenses for select to anon, authenticated
+  using (published or public.is_admin());
+
+drop policy if exists "admins write licenses" on public.licenses;
+create policy "admins write licenses"
+  on public.licenses for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
+
+-- Partner solutions
+create table if not exists public.partner_solutions (
+  id uuid primary key default gen_random_uuid(),
+  partner_id uuid not null references public.partners (id) on delete cascade,
+  slug text not null,
+  eyebrow_en text,
+  eyebrow_ar text,
+  title_en text not null,
+  title_ar text not null,
+  summary_en text,
+  summary_ar text,
+  intro_en text,
+  intro_ar text,
+  image_url text,
+  blocks jsonb not null default '[]'::jsonb,
+  sort_order int not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now(),
+  unique (partner_id, slug)
+);
+
+-- Arabic card image, for images with English text in them.
+alter table public.partner_solutions
+  add column if not exists image_url_ar text;
+
+alter table public.partner_solutions enable row level security;
+
+drop policy if exists "public read published partner solutions" on public.partner_solutions;
+create policy "public read published partner solutions"
+  on public.partner_solutions for select to anon, authenticated
+  using (published or public.is_admin());
+
+drop policy if exists "admins write partner solutions" on public.partner_solutions;
+create policy "admins write partner solutions"
+  on public.partner_solutions for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());

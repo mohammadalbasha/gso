@@ -12,8 +12,10 @@ import type {
   DocumentOwner,
   DocumentRow,
   DocumentSectionRow,
+  LicenseRow,
   PartnerRow,
   PartnerSectionRow,
+  PartnerSolutionRow,
   ProductBlock,
   ProductRow,
   ProjectRow,
@@ -204,6 +206,45 @@ export async function getPartnerSections(partnerId: string): Promise<PartnerSect
   }
 }
 
+export async function getPartnerSolutions(partnerId: string): Promise<PartnerSolutionRow[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("partner_solutions")
+      .select("*")
+      .eq("partner_id", partnerId)
+      .eq("published", true)
+      .order("sort_order");
+    if (error) return [];
+    return (data ?? []).map((row) => ({
+      ...row,
+      blocks: asBlocks(row.blocks),
+    })) as PartnerSolutionRow[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getPartnerSolution(
+  partnerId: string,
+  slug: string,
+): Promise<PartnerSolutionRow | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("partner_solutions")
+      .select("*")
+      .eq("partner_id", partnerId)
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
+    if (error || !data) return null;
+    return { ...data, blocks: asBlocks(data.blocks) } as PartnerSolutionRow;
+  } catch {
+    return null;
+  }
+}
+
 async function loadDocumentSections(
   owner: DocumentOwner,
   publishedOnly: boolean,
@@ -263,6 +304,36 @@ export async function getAdminDocumentSections(
     return await loadDocumentSections(owner, false);
   } catch {
     return [];
+  }
+}
+
+async function loadLicenses(publishedOnly: boolean): Promise<LicenseRow[] | null> {
+  const supabase = await createClient();
+  let query = supabase.from("licenses").select("*").order("sort_order");
+  if (publishedOnly) query = query.eq("published", true);
+  const { data, error } = await query;
+  if (error) return null;
+  const bucket = supabase.storage.from(documentsBucket);
+  return (data ?? []).map((license) => ({
+    ...license,
+    url: bucket.getPublicUrl(license.file_path).data.publicUrl,
+  })) as LicenseRow[];
+}
+
+export async function getPublishedLicenses(): Promise<LicenseRow[]> {
+  try {
+    return (await loadLicenses(true)) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+/** Every license, published or not. Null means the table is not ready. */
+export async function getAdminLicenses(): Promise<LicenseRow[] | null> {
+  try {
+    return await loadLicenses(false);
+  } catch {
+    return null;
   }
 }
 

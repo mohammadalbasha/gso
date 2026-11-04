@@ -24,6 +24,8 @@ export const blockTypeLabels: Record<BlockType, string> = {
   table: "Table",
   advantages: "Advantages",
   steps: "Steps",
+  badges: "Badges",
+  stats: "Stats",
   image: "Image",
   image_cards: "Image cards",
 };
@@ -31,6 +33,13 @@ export const blockTypeLabels: Record<BlockType, string> = {
 type Pair = { en: string; ar: string };
 
 const emptyPair = (): Pair => ({ en: "", ar: "" });
+
+const emptyStat = () => ({
+  value_en: "",
+  value_ar: "",
+  label_en: "",
+  label_ar: "",
+});
 
 const emptyImageCard = () => ({
   image_url: "",
@@ -70,6 +79,10 @@ export function emptyBlock(type: BlockType): ProductBlock {
         steps_label_ar: "",
         steps: [emptyPair()],
       };
+    case "badges":
+      return { type, ...label, variant: "outline", items: [emptyPair()] };
+    case "stats":
+      return { type, ...label, items: [emptyStat()] };
     case "image":
       return {
         type,
@@ -490,6 +503,114 @@ export function BlockEditor({
           }
         >
           Add step
+        </AddButton>
+      </div>
+    );
+  }
+
+  if (block.type === "badges") {
+    return (
+      <div className="grid gap-3">
+        <label className="grid gap-1 md:w-1/2">
+          <span className="text-sm font-medium text-gray-900">Style</span>
+          <select
+            className="h-9 rounded-md border px-3 text-sm"
+            value={block.variant}
+            onChange={(event) =>
+              onChange({
+                ...block,
+                variant: event.target.value as typeof block.variant,
+              })
+            }
+          >
+            <option value="outline">Outlined</option>
+            <option value="solid">Dark</option>
+            <option value="soft">Light</option>
+          </select>
+        </label>
+        {title}
+        {block.items.map((item, i) => (
+          <ItemCard
+            key={i}
+            title={`Badge ${i + 1}`}
+            onRemove={() =>
+              onChange({ ...block, items: removeAt(block.items, i) })
+            }
+          >
+            <BiField
+              label="Badge text"
+              en={item.en}
+              ar={item.ar}
+              onChange={(en, ar) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, { en, ar }),
+                })
+              }
+            />
+          </ItemCard>
+        ))}
+        <AddButton
+          onClick={() =>
+            onChange({ ...block, items: [...block.items, emptyPair()] })
+          }
+        >
+          Add badge
+        </AddButton>
+      </div>
+    );
+  }
+
+  if (block.type === "stats") {
+    return (
+      <div className="grid gap-3">
+        {title}
+        {block.items.map((item, i) => (
+          <ItemCard
+            key={i}
+            title={`Stat ${i + 1}`}
+            onRemove={() =>
+              onChange({ ...block, items: removeAt(block.items, i) })
+            }
+          >
+            <BiField
+              label="Number"
+              en={item.value_en}
+              ar={item.value_ar}
+              onChange={(value_en, value_ar) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, {
+                    ...item,
+                    value_en,
+                    value_ar,
+                  }),
+                })
+              }
+            />
+            <BiField
+              label="Label"
+              en={item.label_en}
+              ar={item.label_ar}
+              onChange={(label_en, label_ar) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, {
+                    ...item,
+                    label_en,
+                    label_ar,
+                  }),
+                })
+              }
+            />
+          </ItemCard>
+        ))}
+        <AddButton
+          onClick={() =>
+            onChange({ ...block, items: [...block.items, emptyStat()] })
+          }
+        >
+          Add stat
         </AddButton>
       </div>
     );

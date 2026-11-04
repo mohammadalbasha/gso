@@ -22,10 +22,12 @@ function revalidateSite() {
     revalidatePath(`/${locale}/branches`);
     revalidatePath(`/${locale}/contact`);
     revalidatePath(`/${locale}/insulating-materials`);
+    revalidatePath(`/${locale}/licenses`);
   }
   revalidatePath("/[locale]/insulating-materials/[slug]", "page");
   revalidatePath("/[locale]/partners/[slug]", "page");
   revalidatePath("/[locale]/partners/[slug]/products/[productSlug]", "page");
+  revalidatePath("/[locale]/partners/[slug]/solutions/[solutionSlug]", "page");
   revalidatePath("/admin", "layout");
 }
 
@@ -311,6 +313,55 @@ export async function deletePartnerSection(formData: FormData) {
   revalidateSite();
 }
 
+export async function savePartnerSolution(formData: FormData) {
+  const supabase = await adminClient();
+  const id = text(formData, "id");
+  const partnerId = text(formData, "partner_id");
+  const [imageUrl, imageUrlAr] = await Promise.all([
+    imageFromForm(supabase, formData, "partners", text(formData, "image_url")),
+    imageFromForm(
+      supabase,
+      formData,
+      "partners",
+      text(formData, "image_ar_url"),
+      "image_ar",
+    ),
+  ]);
+  const row = {
+    partner_id: partnerId,
+    slug: text(formData, "slug"),
+    eyebrow_en: text(formData, "eyebrow_en"),
+    eyebrow_ar: text(formData, "eyebrow_ar"),
+    title_en: text(formData, "title_en"),
+    title_ar: text(formData, "title_ar"),
+    summary_en: text(formData, "summary_en"),
+    summary_ar: text(formData, "summary_ar"),
+    intro_en: text(formData, "intro_en"),
+    intro_ar: text(formData, "intro_ar"),
+    image_url: imageUrl,
+    image_url_ar: imageUrlAr,
+    blocks: parseBlocks(text(formData, "blocks")),
+    sort_order: Number(text(formData, "sort_order") || 0),
+    published: checked(formData, "published"),
+  };
+  const result = id
+    ? await supabase.from("partner_solutions").update(row).eq("id", id)
+    : await supabase.from("partner_solutions").insert(row);
+  if (result.error) throw new Error(result.error.message);
+  revalidateSite();
+  redirect(`/admin/partners/${partnerId}`);
+}
+
+export async function deletePartnerSolution(formData: FormData) {
+  const supabase = await adminClient();
+  const { error } = await supabase
+    .from("partner_solutions")
+    .delete()
+    .eq("id", text(formData, "id"));
+  if (error) throw new Error(error.message);
+  revalidateSite();
+}
+
 /** Stores an image picked inside a content block and returns its public URL. */
 export async function uploadBlockImage(formData: FormData) {
   const supabase = await adminClient();
@@ -399,6 +450,47 @@ export async function deleteDocument(formData: FormData) {
     .from("documents")
     .delete()
     .eq("id", id)
+    .select("file_path")
+    .single();
+  if (error) throw new Error(error.message);
+  const removed = await supabase.storage
+    .from(documentsBucket)
+    .remove([data.file_path]);
+  if (removed.error) throw new Error(removed.error.message);
+  revalidateSite();
+}
+
+export async function saveLicense(formData: FormData) {
+  const supabase = await adminClient();
+  const id = text(formData, "id");
+  const row = {
+    title_en: text(formData, "title_en"),
+    title_ar: text(formData, "title_ar"),
+    sort_order: Number(text(formData, "sort_order") || 0),
+    published: checked(formData, "published"),
+  };
+  if (id) {
+    const { error } = await supabase.from("licenses").update(row).eq("id", id);
+    if (error) throw new Error(error.message);
+  } else {
+    const filePath = text(formData, "file_path");
+    const { error } = await supabase
+      .from("licenses")
+      .insert({ ...row, file_path: filePath });
+    if (error) {
+      await supabase.storage.from(documentsBucket).remove([filePath]);
+      throw new Error(error.message);
+    }
+  }
+  revalidateSite();
+}
+
+export async function deleteLicense(formData: FormData) {
+  const supabase = await adminClient();
+  const { data, error } = await supabase
+    .from("licenses")
+    .delete()
+    .eq("id", text(formData, "id"))
     .select("file_path")
     .single();
   if (error) throw new Error(error.message);

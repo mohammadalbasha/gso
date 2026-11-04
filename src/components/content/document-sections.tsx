@@ -1,6 +1,6 @@
-import { FileText } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { localized } from "@/lib/content/queries";
+import { DocumentLink } from "./document-link";
 import type { DocumentSectionRow } from "@/lib/content/types";
 
 export async function DocumentSections({
@@ -23,15 +23,12 @@ export async function DocumentSections({
           <ul className="grid gap-3 sm:grid-cols-2">
             {section.documents.map((document) => (
               <li key={document.id}>
-                <a
-                  href={document.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border border-primary-500/20 p-3 text-foreground transition-colors hover:border-primary-500 hover:bg-primary-50"
-                >
-                  <FileText className="h-5 w-5 shrink-0 text-secondary-500" aria-hidden />
-                  <span>{localized(locale, document.title_en, document.title_ar)}</span>
-                </a>
+                <DocumentLink
+                  url={document.url}
+                  title={localized(locale, document.title_en, document.title_ar)}
+                  viewLabel={t("viewPdf")}
+                  closeLabel={t("close")}
+                />
               </li>
             ))}
           </ul>

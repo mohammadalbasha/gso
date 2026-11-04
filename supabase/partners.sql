@@ -148,6 +148,6 @@ create policy "admins delete documents"
 
 insert into public.site_content (key, value_en, value_ar)
 values
-  ('home.partners.title', 'Our Partners', 'شركاؤنا'),
-  ('home.partners.subtitle', 'Partners', 'الشركاء')
+  ('home.partners.title', 'Our Agencies', 'وكالاتنا'),
+  ('home.partners.subtitle', 'Companies we represent in Kuwait', 'الشركات التي نمثلها في الكويت')
 on conflict (key) do nothing;

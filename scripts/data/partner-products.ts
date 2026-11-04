@@ -42,9 +42,10 @@ export const partnerProducts: PartnerProductSeed[] = [
         variant: "default",
       },
       {
-        type: "list",
+        type: "badges",
         label_en: "Key performance",
         label_ar: "أبرز الخصائص",
+        variant: "solid",
         items: [
           { en: "140 m head", ar: "ضغط مائي حتى 140 م" },
           { en: "Self-seals cracks ≤ 0.5 mm", ar: "إغلاق ذاتي للشقوق حتى 0.5 مم" },
@@ -84,9 +85,10 @@ export const partnerProducts: PartnerProductSeed[] = [
         ],
       },
       {
-        type: "list",
+        type: "badges",
         label_en: "Where to use",
         label_ar: "مجالات الاستخدام",
+        variant: "soft",
         items: [
           { en: "Basement rafts & walls", ar: "بلاطات وجدران السراديب" },
           { en: "Retaining walls", ar: "الجدران الاستنادية" },
@@ -215,8 +217,7 @@ export const partnerProducts: PartnerProductSeed[] = [
       },
     ],
     sort_order: 1,
-    // Keep false until the new code is deployed: see the note in the seeder.
-    published: false,
+    published: true,
   },
   {
     partner_slug: "kryton",
@@ -309,7 +310,7 @@ export const partnerProducts: PartnerProductSeed[] = [
       },
     ],
     sort_order: 2,
-    published: false,
+    published: true,
   },
   {
     partner_slug: "kryton",
@@ -360,6 +361,6 @@ export const partnerProducts: PartnerProductSeed[] = [
       },
     ],
     sort_order: 3,
-    published: false,
+    published: true,
   },
 ];

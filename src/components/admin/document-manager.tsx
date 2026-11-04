@@ -20,11 +20,35 @@ import { DeleteButton } from "./delete-button";
 import { Card, PairInput } from "./form-parts";
 
 // Keep in step with the bucket's file_size_limit in supabase/partners.sql.
-const MAX_PDF_MB = 50;
+export const MAX_PDF_MB = 50;
+
+/** Returns what is wrong with the chosen file, or an empty string. */
+export function pdfProblem(file: FormDataEntryValue | null) {
+  if (!(file instanceof File) || file.size === 0) {
+    return "Please choose a PDF file.";
+  }
+  if (file.type !== "application/pdf") return "Only PDF files can be uploaded.";
+  if (file.size > MAX_PDF_MB * 1024 * 1024) {
+    return `The maximum PDF size is ${MAX_PDF_MB} MB.`;
+  }
+  return "";
+}
+
+/** Sends the file straight to storage and returns its path in the bucket. */
+export async function uploadPdf(file: File) {
+  const { path, signedUrl } = await createDocumentUpload();
+  const upload = await fetch(signedUrl, {
+    method: "PUT",
+    headers: { "content-type": "application/pdf" },
+    body: file,
+  });
+  if (!upload.ok) throw new Error("upload failed");
+  return path;
+}
 
 const languageLabels = { en: "English only", ar: "Arabic only" };
 
-function SortAndVisibility({
+export function SortAndVisibility({
   sortOrder,
   published,
 }: {
@@ -157,28 +181,12 @@ function AddDocumentForm({ sectionId }: { sectionId: string }) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const file = formData.get("file");
-    setError("");
-    if (!(file instanceof File) || file.size === 0) {
-      setError("Please choose a PDF file.");
-      return;
-    }
-    if (file.type !== "application/pdf") {
-      setError("Only PDF files can be uploaded.");
-      return;
-    }
-    if (file.size > MAX_PDF_MB * 1024 * 1024) {
-      setError(`The maximum PDF size is ${MAX_PDF_MB} MB.`);
-      return;
-    }
+    const problem = pdfProblem(file);
+    setError(problem);
+    if (problem) return;
     setBusy(true);
     try {
-      const { path, signedUrl } = await createDocumentUpload();
-      const upload = await fetch(signedUrl, {
-        method: "PUT",
-        headers: { "content-type": "application/pdf" },
-        body: file,
-      });
-      if (!upload.ok) throw new Error("upload failed");
+      const path = await uploadPdf(file as File);
       formData.delete("file");
       formData.set("file_path", path);
       await saveDocument(formData);

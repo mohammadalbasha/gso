@@ -21,6 +21,8 @@ const typeStyles: Record<BlockType, string> = {
   table: "bg-purple-50 text-purple-700 border-purple-200",
   advantages: "bg-amber-50 text-amber-800 border-amber-200",
   steps: "bg-teal-50 text-teal-700 border-teal-200",
+  badges: "bg-orange-50 text-orange-700 border-orange-200",
+  stats: "bg-slate-100 text-slate-700 border-slate-300",
   image: "bg-pink-50 text-pink-700 border-pink-200",
   image_cards: "bg-indigo-50 text-indigo-700 border-indigo-200",
 };
@@ -49,6 +51,10 @@ function blockSummary(block: ProductBlock) {
       return `${block.steps.length} step(s)`;
     case "table":
       return `${block.columns.length} column(s), ${block.rows.length} row(s)`;
+    case "badges":
+      return `${block.items.length} badge(s)`;
+    case "stats":
+      return `${block.items.length} stat(s)`;
     case "image":
       return block.image_url ? "Image added" : "No image yet";
     case "image_cards":

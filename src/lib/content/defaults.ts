@@ -636,8 +636,12 @@ export const defaultSiteContent: { key: string; value_en: string; value_ar: stri
   },
   { key: "home.services.title", value_en: "Our Services", value_ar: "خدماتنا" },
   { key: "home.services.subtitle", value_en: "Services", value_ar: "الخدمات" },
-  { key: "home.partners.title", value_en: "Our Partners", value_ar: "شركاؤنا" },
-  { key: "home.partners.subtitle", value_en: "Partners", value_ar: "الشركاء" },
+  { key: "home.partners.title", value_en: "Our Agencies", value_ar: "وكالاتنا" },
+  {
+    key: "home.partners.subtitle",
+    value_en: "Companies we represent in Kuwait",
+    value_ar: "الشركات التي نمثلها في الكويت",
+  },
   { key: "about.title", value_en: "About Us", value_ar: "من نحن" },
   {
     key: "about.firstParagraph",

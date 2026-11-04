@@ -6,6 +6,7 @@ const sections = [
   { title: "Products", href: "/admin/products", description: "Control product names, photos, and detail sections." },
   { title: "Partners", href: "/admin/partners", description: "Manage partner companies, their products, sections, and PDFs." },
   { title: "PDFs", href: "/admin/documents", description: "Upload the main company's PDFs, grouped under section titles." },
+  { title: "Licenses", href: "/admin/licenses", description: "Add the licenses shown on the Licenses page, each with a title and a PDF." },
   { title: "Branches", href: "/admin/branches", description: "Update addresses, phones, and which branches are open." },
   { title: "Site text", href: "/admin/site", description: "Edit the homepage, about text, phones, and email." },
 ];

@@ -2,14 +2,19 @@ import { Pencil, Plus } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { deletePartnerSection } from "../../content-actions";
+import { deletePartnerSection, deletePartnerSolution } from "../../content-actions";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { DocumentManager } from "@/components/admin/document-manager";
 import { Card } from "@/components/admin/form-parts";
 import { PartnerForm } from "@/components/admin/partner-form";
 import { getAdminDocumentSections } from "@/lib/content/queries";
-import type { PartnerRow, PartnerSectionRow, ProductRow } from "@/lib/content/types";
+import type {
+  PartnerRow,
+  PartnerSectionRow,
+  PartnerSolutionRow,
+  ProductRow,
+} from "@/lib/content/types";
 
 export const dynamic = "force-dynamic";
 
@@ -36,10 +41,15 @@ export default async function EditPartnerPage({
   if (!data) notFound();
   const partner = data as PartnerRow;
 
-  const [productResult, sectionResult, documentSections] = await Promise.all([
+  const [productResult, solutionResult, sectionResult, documentSections] = await Promise.all([
     supabase
       .from("products")
       .select("id, name_en, name_ar, slug, published")
+      .eq("partner_id", id)
+      .order("sort_order"),
+    supabase
+      .from("partner_solutions")
+      .select("id, title_en, title_ar, published")
       .eq("partner_id", id)
       .order("sort_order"),
     supabase
@@ -52,6 +62,10 @@ export default async function EditPartnerPage({
   const products = (productResult.data ?? []) as Pick<
     ProductRow,
     "id" | "name_en" | "name_ar" | "slug" | "published"
+  >[];
+  const solutions = (solutionResult.data ?? []) as Pick<
+    PartnerSolutionRow,
+    "id" | "title_en" | "title_ar" | "published"
   >[];
   const sections = (sectionResult.data ?? []) as Pick<
     PartnerSectionRow,
@@ -66,6 +80,7 @@ export default async function EditPartnerPage({
       <nav className="flex flex-wrap gap-2 text-sm">
         {[
           ["#products", "Products"],
+          ["#solutions", "Solutions"],
           ["#sections", "Sections"],
           ["#documents", "PDFs"],
         ].map(([href, label]) => (
@@ -115,6 +130,60 @@ export default async function EditPartnerPage({
                 Edit
               </Link>
             </Button>
+          </div>
+        ))}
+      </Card>
+
+      <Card
+        id="solutions"
+        title="Solutions"
+        description="The items of the “حلول وطرق عزل” section. Each one is a card on the partner's page with its own full page."
+        actions={
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/admin/partners/${id}/solutions/new`}>
+              <Plus />
+              Add solution
+            </Link>
+          </Button>
+        }
+      >
+        {solutionResult.error ? (
+          <p className="text-sm text-secondary-800">
+            The solutions table is not ready. Run `supabase/solutions.sql` in
+            the Supabase SQL Editor, then reload this page.
+          </p>
+        ) : null}
+        {!solutionResult.error && solutions.length === 0 ? (
+          <p className="text-sm text-gray-600">No solutions yet.</p>
+        ) : null}
+        {solutions.map((solution) => (
+          <div
+            key={solution.id}
+            className="flex items-center justify-between gap-4 border-b border-gray-200 py-3 last:border-0"
+          >
+            <div>
+              <p className="font-medium">
+                {solution.title_en}
+                {solution.published ? null : <HiddenBadge />}
+              </p>
+              <p className="text-sm text-gray-700" dir="rtl">
+                {solution.title_ar}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button asChild variant="outline">
+                <Link href={`/admin/partners/${id}/solutions/${solution.id}`}>
+                  <Pencil />
+                  Edit
+                </Link>
+              </Button>
+              <DeleteButton
+                action={deletePartnerSolution}
+                id={solution.id}
+                itemType="solution"
+                itemName={solution.title_en}
+              />
+            </div>
           </div>
         ))}
       </Card>

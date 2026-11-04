@@ -68,6 +68,50 @@ function TextSection({ block, locale, nested }: BlockProps<"text">) {
   );
 }
 
+const badgeStyles = {
+  solid: "bg-primary-500 text-white",
+  soft: "bg-primary-50 text-primary-500",
+  outline: "border border-primary-500 text-primary-500",
+};
+
+function BadgesBlock({ block, locale, nested }: BlockProps<"badges">) {
+  return (
+    <section>
+      <BlockHeading text={localized(locale, block.label_en, block.label_ar)} nested={nested} />
+      <ul className="flex flex-wrap gap-2">
+        {block.items.map((item, index) => (
+          <li
+            key={index}
+            className={cn("rounded px-3 py-1.5 text-sm font-medium", badgeStyles[block.variant])}
+          >
+            {localized(locale, item.en, item.ar)}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function StatsBlock({ block, locale, nested }: BlockProps<"stats">) {
+  return (
+    <section>
+      <BlockHeading text={localized(locale, block.label_en, block.label_ar)} nested={nested} />
+      <dl className="grid gap-6 rounded-lg bg-primary-500 p-6 text-white sm:grid-cols-3 sm:p-8">
+        {block.items.map((item, index) => (
+          <div key={index} className="flex flex-col-reverse gap-1">
+            <dt className="text-sm text-white/75">
+              {localized(locale, item.label_en, item.label_ar)}
+            </dt>
+            <dd className="text-3xl font-bold">
+              {localized(locale, item.value_en, item.value_ar)}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
 function ImageBlock({ block, locale, nested }: BlockProps<"image">) {
   const src = (locale === "ar" && block.image_url_ar) || block.image_url;
   const caption = localized(locale, block.caption_en, block.caption_ar);
@@ -80,7 +124,7 @@ function ImageBlock({ block, locale, nested }: BlockProps<"image">) {
         <img
           src={src}
           alt={localized(locale, block.alt_en, block.alt_ar)}
-          className="w-full h-auto rounded-lg"
+          className="mx-auto h-auto max-w-full rounded-lg"
         />
         {caption ? (
           <figcaption className="mt-2 text-sm text-foreground/70">{caption}</figcaption>
@@ -94,7 +138,7 @@ function ImageCardsBlock({ block, locale, nested }: BlockProps<"image_cards">) {
   return (
     <section>
       <BlockHeading text={localized(locale, block.label_en, block.label_ar)} nested={nested} />
-      <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ol className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {block.items.map((item, index) => (
           <li key={index}>
             {item.image_url ? (
@@ -186,6 +230,8 @@ function BlockView({
     <BlockHeading text={localized(locale, block.label_en, block.label_ar)} nested={nested} />
   );
   if (block.type === "text") return <TextSection block={block} locale={locale} nested={nested} />;
+  if (block.type === "badges") return <BadgesBlock block={block} locale={locale} nested={nested} />;
+  if (block.type === "stats") return <StatsBlock block={block} locale={locale} nested={nested} />;
   if (block.type === "image") return <ImageBlock block={block} locale={locale} nested={nested} />;
   if (block.type === "image_cards") {
     return <ImageCardsBlock block={block} locale={locale} nested={nested} />;

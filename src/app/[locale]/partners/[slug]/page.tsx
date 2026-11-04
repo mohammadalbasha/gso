@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Globe, Mail, Phone } from "lucide-react";
+import { BadgeCheck, Globe, Mail, Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContentBlocks } from "@/components/content/content-blocks";
 import { DocumentSections } from "@/components/content/document-sections";
+import { SolutionCard } from "@/components/partners/solution-card";
 import {
   getDocumentSections,
   getPartnerBySlug,
   getPartnerProducts,
   getPartnerSections,
+  getPartnerSolutions,
   localized,
 } from "@/lib/content/queries";
 
@@ -36,9 +38,10 @@ export default async function PartnerPage({ params }: Props) {
   const partner = await getPartnerBySlug(slug);
   if (!partner) notFound();
 
-  const [t, products, sections, documents] = await Promise.all([
+  const [t, products, solutions, sections, documents] = await Promise.all([
     getTranslations("partners"),
     getPartnerProducts(partner.id),
+    getPartnerSolutions(partner.id),
     getPartnerSections(partner.id),
     getDocumentSections({ partnerId: partner.id }, locale),
   ]);
@@ -64,6 +67,10 @@ export default async function PartnerPage({ params }: Props) {
               {headline || name}
             </h1>
           </div>
+          <p className="flex max-w-3xl items-start gap-3 rounded-lg border-s-4 border-secondary-500 bg-secondary-50 px-4 py-3 font-medium text-primary-500">
+            <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-secondary-600" aria-hidden />
+            {t("agencyNotice", { name })}
+          </p>
           {description ? (
             <p className="max-w-3xl whitespace-pre-line text-lg leading-relaxed text-foreground">
               {description}
@@ -131,6 +138,23 @@ export default async function PartnerPage({ params }: Props) {
                     </p>
                   </div>
                 </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {solutions.length > 0 ? (
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold text-primary-500">{t("solutions")}</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {solutions.map((solution) => (
+                <SolutionCard
+                  key={solution.id}
+                  solution={solution}
+                  partnerSlug={partner.slug}
+                  locale={locale}
+                  readMoreLabel={t("readMore")}
+                />
               ))}
             </div>
           </section>
