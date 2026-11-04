@@ -119,7 +119,7 @@ if (siteError) throw siteError;
 console.log(`upserted ${defaultSiteContent.length} site text rows`);
 
 const users = await fetch(`${url}/auth/v1/admin/users?page=1&per_page=20`, {
-  headers: { apikey: key, Authorization: `Bearer ${key}` },
+  headers: { apikey: key!, Authorization: `Bearer ${key}` },
 });
 const body = (await users.json()) as { users?: { id: string }[] };
   for (const user of body.users ?? []) {

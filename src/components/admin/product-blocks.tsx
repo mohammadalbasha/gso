@@ -7,11 +7,13 @@ import {
   ArrowUp,
   Plus,
   Trash2,
+  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLayoutEffect, useRef, useState } from "react";
+import { uploadBlockImage } from "@/app/admin/(panel)/content-actions";
 import type { ProductBlock } from "@/lib/content/types";
 
 export type BlockType = ProductBlock["type"];
@@ -22,11 +24,21 @@ export const blockTypeLabels: Record<BlockType, string> = {
   table: "Table",
   advantages: "Advantages",
   steps: "Steps",
+  image: "Image",
+  image_cards: "Image cards",
 };
 
 type Pair = { en: string; ar: string };
 
 const emptyPair = (): Pair => ({ en: "", ar: "" });
+
+const emptyImageCard = () => ({
+  image_url: "",
+  label_en: "",
+  label_ar: "",
+  body_en: "",
+  body_ar: "",
+});
 
 export function emptyBlock(type: BlockType): ProductBlock {
   const label = { label_en: "", label_ar: "" };
@@ -58,6 +70,19 @@ export function emptyBlock(type: BlockType): ProductBlock {
         steps_label_ar: "",
         steps: [emptyPair()],
       };
+    case "image":
+      return {
+        type,
+        ...label,
+        image_url: "",
+        image_url_ar: "",
+        alt_en: "",
+        alt_ar: "",
+        caption_en: "",
+        caption_ar: "",
+      };
+    case "image_cards":
+      return { type, ...label, items: [emptyImageCard()] };
   }
 }
 
@@ -111,6 +136,104 @@ function BiField({
           />
         </label>
       </div>
+    </div>
+  );
+}
+
+// Server actions accept up to 10 MB (next.config.ts).
+const MAX_IMAGE_MB = 9;
+
+function ImageField({
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint?: string;
+  value: string;
+  onChange: (url: string) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+  // The upload can finish after other edits, so always call the newest handler.
+  const latestOnChange = useRef(onChange);
+  useLayoutEffect(() => {
+    latestOnChange.current = onChange;
+  });
+
+  async function upload(file: File) {
+    setError("");
+    if (!file.type.startsWith("image/")) {
+      setError("Please choose an image file (JPG, PNG, WebP…).");
+      return;
+    }
+    if (file.size > MAX_IMAGE_MB * 1024 * 1024) {
+      setError(`The maximum image size is ${MAX_IMAGE_MB} MB.`);
+      return;
+    }
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.set("image", file);
+      latestOnChange.current(await uploadBlockImage(formData));
+    } catch {
+      setError("The image could not be uploaded. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="grid gap-1.5">
+      <p className="text-sm font-medium text-gray-900">{label}</p>
+      {hint ? <p className="text-xs text-gray-500">{hint}</p> : null}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex h-24 w-36 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-gray-50">
+          {value ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={value} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <span className="text-xs text-gray-400">No image</span>
+          )}
+        </div>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="sr-only"
+          tabIndex={-1}
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            event.target.value = "";
+            if (file) void upload(file);
+          }}
+        />
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={uploading}
+          onClick={() => inputRef.current?.click()}
+        >
+          <Upload />
+          {uploading ? "Uploading…" : value ? "Replace image" : "Choose image"}
+        </Button>
+        {value ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="text-red-600 hover:bg-red-50 hover:text-red-700"
+            onClick={() => onChange("")}
+          >
+            <Trash2 />
+            Remove
+          </Button>
+        ) : null}
+      </div>
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </div>
   );
 }
@@ -174,7 +297,7 @@ export function BlockEditor({
 }) {
   const title = (
     <BiField
-      label="Section title"
+      label="Title"
       en={block.label_en}
       ar={block.label_ar}
       onChange={(label_en, label_ar) =>
@@ -372,7 +495,118 @@ export function BlockEditor({
     );
   }
 
-  return <TableEditor block={block} title={title} onChange={onChange} />;
+  if (block.type === "image") {
+    return (
+      <div className="grid gap-3">
+        {title}
+        <ImageField
+          label="Image"
+          value={block.image_url}
+          onChange={(image_url) => onChange({ ...block, image_url })}
+        />
+        <ImageField
+          label="Arabic version of the image (optional)"
+          hint="Add this if the image has English text in it. Arabic visitors will see this one."
+          value={block.image_url_ar ?? ""}
+          onChange={(image_url_ar) => onChange({ ...block, image_url_ar })}
+        />
+        <BiField
+          label="Image description (for screen readers and search engines)"
+          en={block.alt_en}
+          ar={block.alt_ar}
+          onChange={(alt_en, alt_ar) => onChange({ ...block, alt_en, alt_ar })}
+        />
+        <BiField
+          label="Caption (optional)"
+          en={block.caption_en}
+          ar={block.caption_ar}
+          onChange={(caption_en, caption_ar) =>
+            onChange({ ...block, caption_en, caption_ar })
+          }
+        />
+      </div>
+    );
+  }
+
+  if (block.type === "image_cards") {
+    return (
+      <div className="grid gap-3">
+        {title}
+        {block.items.map((item, i) => (
+          <ItemCard
+            key={i}
+            title={`Card ${i + 1}`}
+            onRemove={() =>
+              onChange({ ...block, items: removeAt(block.items, i) })
+            }
+          >
+            <ImageField
+              label="Image"
+              value={item.image_url}
+              onChange={(image_url) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, { ...item, image_url }),
+                })
+              }
+            />
+            <BiField
+              label="Card title"
+              en={item.label_en}
+              ar={item.label_ar}
+              onChange={(label_en, label_ar) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, {
+                    ...item,
+                    label_en,
+                    label_ar,
+                  }),
+                })
+              }
+            />
+            <BiField
+              label="Card text"
+              multiline
+              en={item.body_en}
+              ar={item.body_ar}
+              onChange={(body_en, body_ar) =>
+                onChange({
+                  ...block,
+                  items: replaceAt(block.items, i, {
+                    ...item,
+                    body_en,
+                    body_ar,
+                  }),
+                })
+              }
+            />
+          </ItemCard>
+        ))}
+        <AddButton
+          onClick={() =>
+            onChange({ ...block, items: [...block.items, emptyImageCard()] })
+          }
+        >
+          Add card
+        </AddButton>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-3">
+      <TableEditor block={block} title={title} onChange={onChange} />
+      <BiField
+        label="Note under the table (optional)"
+        en={block.note_en ?? ""}
+        ar={block.note_ar ?? ""}
+        onChange={(note_en, note_ar) =>
+          onChange({ ...block, note_en, note_ar })
+        }
+      />
+    </div>
+  );
 }
 
 type TableBlock = Extract<ProductBlock, { type: "table" }>;

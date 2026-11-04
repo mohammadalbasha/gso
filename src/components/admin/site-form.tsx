@@ -56,6 +56,17 @@ const sections: Section[] = [
     },
   },
   {
+    id: "home-partners",
+    title: "Home page · Partners",
+    description:
+      "The heading above the partner company cards. The cards themselves are edited under Partners.",
+    page: "",
+    fields: {
+      "home.partners.title": "Section title",
+      "home.partners.subtitle": "Small text under the title",
+    },
+  },
+  {
     id: "about-page",
     title: "About Us page",
     description:

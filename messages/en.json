@@ -175,5 +175,14 @@
       "description": "We are here to help you achieve your goals. Contact us today to discuss your project.",
       "button": "Contact Us"
     }
+  },
+  "partners": {
+    "title": "Our Partners",
+    "subtitle": "Partners",
+    "visit": "View profile",
+    "products": "Products",
+    "documents": "Documents",
+    "website": "Website",
+    "back": "Back to {name}"
   }
 }

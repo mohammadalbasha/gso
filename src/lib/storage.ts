@@ -1,5 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+export const documentsBucket = "documents";
+
 export function getBucketName() {
   return process.env.SUPABASE_BUCKET_NAME || "images";
 }
@@ -27,8 +29,9 @@ export async function imageFromForm(
   formData: FormData,
   folder: string,
   currentUrl: string,
+  field = "image",
 ) {
-  const file = formData.get("image");
+  const file = formData.get(field);
   if (file instanceof File && file.size > 0) {
     return uploadImage(supabase, file, folder);
   }

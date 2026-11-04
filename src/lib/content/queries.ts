@@ -6,8 +6,14 @@ import {
   defaultServices,
   defaultSiteContent,
 } from "./defaults";
+import { documentsBucket } from "@/lib/storage";
 import type {
   BranchRow,
+  DocumentOwner,
+  DocumentRow,
+  DocumentSectionRow,
+  PartnerRow,
+  PartnerSectionRow,
   ProductBlock,
   ProductRow,
   ProjectRow,
@@ -47,6 +53,7 @@ export async function getPublishedProducts(): Promise<ProductRow[] | null> {
     const { data, error } = await supabase
       .from("products")
       .select("*")
+      .is("partner_id", null)
       .eq("published", true)
       .order("sort_order");
     if (error) return null;
@@ -66,6 +73,7 @@ export async function getProductBySlug(slug: string): Promise<ProductRow | null>
       .from("products")
       .select("*")
       .eq("slug", slug)
+      .is("partner_id", null)
       .eq("published", true)
       .maybeSingle();
     if (error || !data) {
@@ -104,6 +112,157 @@ export async function getPublishedServices(): Promise<ServiceRow[] | null> {
     return (data ?? []) as ServiceRow[];
   } catch {
     return null;
+  }
+}
+
+export async function getPublishedPartners(): Promise<PartnerRow[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("partners")
+      .select("*")
+      .eq("published", true)
+      .order("sort_order");
+    if (error) return [];
+    return (data ?? []) as PartnerRow[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getPartnerBySlug(slug: string): Promise<PartnerRow | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("partners")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
+    if (error) return null;
+    return data as PartnerRow | null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPartnerProducts(partnerId: string): Promise<ProductRow[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("partner_id", partnerId)
+      .eq("published", true)
+      .order("sort_order");
+    if (error) return [];
+    return (data ?? []).map((row) => ({
+      ...row,
+      details: asBlocks(row.details),
+    })) as ProductRow[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getPartnerProduct(
+  partnerId: string,
+  slug: string,
+): Promise<ProductRow | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("partner_id", partnerId)
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
+    if (error || !data) return null;
+    return { ...data, details: asBlocks(data.details) } as ProductRow;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPartnerSections(partnerId: string): Promise<PartnerSectionRow[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("partner_sections")
+      .select("*")
+      .eq("partner_id", partnerId)
+      .eq("published", true)
+      .order("sort_order");
+    if (error) return [];
+    return (data ?? []).map((row) => ({
+      ...row,
+      blocks: asBlocks(row.blocks),
+    })) as PartnerSectionRow[];
+  } catch {
+    return [];
+  }
+}
+
+async function loadDocumentSections(
+  owner: DocumentOwner,
+  publishedOnly: boolean,
+): Promise<DocumentSectionRow[]> {
+  const supabase = await createClient();
+  let query = supabase
+    .from("document_sections")
+    .select("*, documents(*)")
+    .order("sort_order")
+    .order("sort_order", { referencedTable: "documents" });
+  query = owner.partnerId
+    ? query.eq("partner_id", owner.partnerId)
+    : query.is("partner_id", null);
+  query = owner.productId
+    ? query.eq("product_id", owner.productId)
+    : query.is("product_id", null);
+  if (publishedOnly) {
+    query = query.eq("published", true).eq("documents.published", true);
+  }
+  const { data, error } = await query;
+  if (error) return [];
+  const bucket = supabase.storage.from(documentsBucket);
+  return (data ?? []).map((section) => ({
+    ...section,
+    documents: ((section.documents ?? []) as DocumentRow[]).map((document) => ({
+      ...document,
+      url: bucket.getPublicUrl(document.file_path).data.publicUrl,
+    })),
+  })) as DocumentSectionRow[];
+}
+
+/** Published PDFs for one language. Sections left with no PDFs are dropped. */
+export async function getDocumentSections(
+  owner: DocumentOwner,
+  locale: string,
+): Promise<DocumentSectionRow[]> {
+  try {
+    const sections = await loadDocumentSections(owner, true);
+    return sections
+      .map((section) => ({
+        ...section,
+        documents: section.documents.filter(
+          (document) => !document.locale || document.locale === locale,
+        ),
+      }))
+      .filter((section) => section.documents.length > 0);
+  } catch {
+    return [];
+  }
+}
+
+/** Every section and PDF for one owner, published or not. For the admin. */
+export async function getAdminDocumentSections(
+  owner: DocumentOwner,
+): Promise<DocumentSectionRow[]> {
+  try {
+    return await loadDocumentSections(owner, false);
+  } catch {
+    return [];
   }
 }
 

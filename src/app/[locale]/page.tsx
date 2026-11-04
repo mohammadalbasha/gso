@@ -2,7 +2,9 @@ import { LanguageCode } from "@/i18n/languages";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
+import { PartnerCard } from "@/components/partners/partner-card";
 import {
+  getPublishedPartners,
   getPublishedProducts,
   getPublishedServices,
   getSiteMap,
@@ -23,11 +25,13 @@ interface Props {
 
 export default async function Home({ params, searchParams }: Props) {
   const t = await getTranslations("home");
+  const tPartners = await getTranslations("partners");
   const { locale } = await params;
   const isRtl = locale === "ar";
   const site = await getSiteMap();
   const products = productsOrDefault(await getPublishedProducts());
   const services = servicesOrDefault(await getPublishedServices());
+  const partners = await getPublishedPartners();
   const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
   return (
     <div>
@@ -214,6 +218,39 @@ export default async function Home({ params, searchParams }: Props) {
           <span className="w-10 h-2 bg-primary-500 mx-auto" />
         </div>
       </section>
+
+      {/* Partners Section */}
+      {partners.length > 0 ? (
+        <section className="bg-white pb-16">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
+            <div className="flex flex-col gap-4 items-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-black">
+                {text("home.partners.title", tPartners("title"))}
+              </h2>
+              <div className="flex flex-col gap-2 items-center">
+                <h6 className="text-xs text-gray-900">
+                  {text("home.partners.subtitle", tPartners("subtitle"))}
+                </h6>
+                <div className="flex items-center gap-2">
+                  <span className="h-1 w-6 bg-secondary-500" />
+                  <span className="h-1 w-3 bg-secondary-500/60" />
+                  <span className="h-1 w-6 bg-secondary-500" />
+                </div>
+              </div>
+            </div>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {partners.map((partner) => (
+                <PartnerCard
+                  key={partner.id}
+                  partner={partner}
+                  locale={locale}
+                  visitLabel={tPartners("visit")}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

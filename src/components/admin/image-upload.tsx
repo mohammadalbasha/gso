@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/utils";
 
 // Server actions accept up to 10 MB (next.config.ts); keep room for the other form fields.
-const MAX_BYTES = 9 * 1024 * 1024;
+const DEFAULT_MAX_MB = 9;
 
 function formatSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
@@ -13,13 +13,21 @@ function formatSize(bytes: number) {
 }
 
 /**
- * Image picker for admin forms. Submits the chosen file as `image` and the
- * image to keep as `image_url` (emptied when the admin removes the image).
+ * Image picker for admin forms. Submits the chosen file as `name` and the
+ * image to keep as `${name}_url` (emptied when the admin removes the image).
+ * Forms with several pickers must lower `maxMb` so they fit in one request.
  */
 export function ImageUpload({
   currentUrl,
   label = "Image",
-}: Readonly<{ currentUrl?: string | null; label?: string }>) {
+  name = "image",
+  maxMb = DEFAULT_MAX_MB,
+}: Readonly<{
+  currentUrl?: string | null;
+  label?: string;
+  name?: string;
+  maxMb?: number;
+}>) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -45,9 +53,9 @@ export function ImageUpload({
       setError("Please choose an image file (JPG, PNG, WebP…).");
       return;
     }
-    if (next.size > MAX_BYTES) {
+    if (next.size > maxMb * 1024 * 1024) {
       setError(
-        `This image is ${formatSize(next.size)}. The maximum is 9 MB — please use a smaller image.`,
+        `This image is ${formatSize(next.size)}. The maximum is ${maxMb} MB — please use a smaller image.`,
       );
       return;
     }
@@ -71,13 +79,13 @@ export function ImageUpload({
       <span className="text-sm font-medium text-gray-900">{label}</span>
       <input
         type="hidden"
-        name="image_url"
+        name={`${name}_url`}
         value={keepCurrent ? (currentUrl ?? "") : ""}
       />
       <input
         ref={inputRef}
         type="file"
-        name="image"
+        name={name}
         accept="image/*"
         className="sr-only"
         tabIndex={-1}
@@ -126,7 +134,7 @@ export function ImageUpload({
               : "Click or drop an image here"}
           </span>
           <span className="text-xs text-gray-500">
-            JPG, PNG or WebP, up to 9 MB
+            JPG, PNG or WebP, up to {maxMb} MB
           </span>
         </button>
       </div>

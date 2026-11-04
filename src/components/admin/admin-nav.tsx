@@ -4,6 +4,8 @@ import Link from "next/link";
 import {
   Building2,
   FileText,
+  Files,
+  Handshake,
   LayoutDashboard,
   MapPin,
   Package,
@@ -17,6 +19,8 @@ const links = [
   { href: "/admin/services", label: "Services", icon: Wrench },
   { href: "/admin/projects", label: "Projects", icon: Building2 },
   { href: "/admin/products", label: "Products", icon: Package },
+  { href: "/admin/partners", label: "Partners", icon: Handshake },
+  { href: "/admin/documents", label: "PDFs", icon: Files },
   { href: "/admin/branches", label: "Branches", icon: MapPin },
   { href: "/admin/site", label: "Site text", icon: FileText },
 ];

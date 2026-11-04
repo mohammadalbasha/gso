@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
-import { getSiteMap, siteText } from "@/lib/content/queries";
+import { DocumentSections } from "@/components/content/document-sections";
+import { getDocumentSections, getSiteMap, siteText } from "@/lib/content/queries";
 
 export const revalidate = 0;
 
@@ -8,6 +9,7 @@ export default async function AboutUsPage() {
   const t = await getTranslations("about");
   const locale = await getLocale();
   const site = await getSiteMap();
+  const documents = await getDocumentSections({}, locale);
   const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
 
   return (
@@ -134,6 +136,11 @@ export default async function AboutUsPage() {
           ></div>
         </div>
       </div>
+      {documents.length > 0 ? (
+        <div className="max-w-4xl mx-auto px-6 pb-20">
+          <DocumentSections sections={documents} locale={locale} />
+        </div>
+      ) : null}
     </div>
   );
 }

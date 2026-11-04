@@ -636,6 +636,8 @@ export const defaultSiteContent: { key: string; value_en: string; value_ar: stri
   },
   { key: "home.services.title", value_en: "Our Services", value_ar: "خدماتنا" },
   { key: "home.services.subtitle", value_en: "Services", value_ar: "الخدمات" },
+  { key: "home.partners.title", value_en: "Our Partners", value_ar: "شركاؤنا" },
+  { key: "home.partners.subtitle", value_en: "Partners", value_ar: "الشركاء" },
   { key: "about.title", value_en: "About Us", value_ar: "من نحن" },
   {
     key: "about.firstParagraph",
@@ -690,6 +692,8 @@ export const siteFields: SiteField[] = [
   { key: "home.about.visionText", label: "Home vision text", multiline: true },
   { key: "home.services.title", label: "Services section title" },
   { key: "home.services.subtitle", label: "Services section subtitle" },
+  { key: "home.partners.title", label: "Partners section title" },
+  { key: "home.partners.subtitle", label: "Partners section subtitle" },
   { key: "about.title", label: "About page title" },
   { key: "about.firstParagraph", label: "About paragraph 1", multiline: true },
   { key: "about.secondParagraph", label: "About paragraph 2", multiline: true },

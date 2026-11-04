@@ -19,6 +19,8 @@ export type ProductBlock =
       label_ar: string;
       columns: { en: string; ar: string }[];
       rows: { en: string; ar: string }[][];
+      note_en?: string;
+      note_ar?: string;
     }
   | {
       type: "advantages";
@@ -40,6 +42,29 @@ export type ProductBlock =
       steps_label_en: string;
       steps_label_ar: string;
       steps: { en: string; ar: string }[];
+    }
+  | {
+      type: "image";
+      label_en: string;
+      label_ar: string;
+      image_url: string;
+      image_url_ar?: string;
+      alt_en: string;
+      alt_ar: string;
+      caption_en: string;
+      caption_ar: string;
+    }
+  | {
+      type: "image_cards";
+      label_en: string;
+      label_ar: string;
+      items: {
+        image_url: string;
+        label_en: string;
+        label_ar: string;
+        body_en: string;
+        body_ar: string;
+      }[];
     };
 
 export type ProjectRow = {
@@ -71,6 +96,7 @@ export type ProductRow = {
   details: ProductBlock[];
   sort_order: number;
   published: boolean;
+  partner_id?: string | null;
 };
 
 export type BranchRow = {
@@ -108,3 +134,62 @@ export type ServiceRow = {
   sort_order: number;
   published: boolean;
 };
+
+export type PartnerRow = {
+  id: string;
+  slug: string;
+  name_en: string;
+  name_ar: string;
+  title_en: string | null;
+  title_ar: string | null;
+  summary_en: string | null;
+  summary_ar: string | null;
+  description_en: string | null;
+  description_ar: string | null;
+  logo_url: string | null;
+  image_url: string | null;
+  website: string | null;
+  phone: string | null;
+  email: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export type PartnerSectionRow = {
+  id: string;
+  partner_id: string;
+  eyebrow_en: string | null;
+  eyebrow_ar: string | null;
+  title_en: string;
+  title_ar: string;
+  intro_en: string | null;
+  intro_ar: string | null;
+  blocks: ProductBlock[];
+  sort_order: number;
+  published: boolean;
+};
+
+export type DocumentRow = {
+  id: string;
+  section_id: string;
+  title_en: string;
+  title_ar: string;
+  file_path: string;
+  url: string;
+  locale: "en" | "ar" | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export type DocumentSectionRow = {
+  id: string;
+  partner_id: string | null;
+  product_id: string | null;
+  title_en: string;
+  title_ar: string;
+  sort_order: number;
+  published: boolean;
+  documents: DocumentRow[];
+};
+
+export type DocumentOwner = { partnerId?: string; productId?: string };
