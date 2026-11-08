@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LanguageCode } from "@/i18n/languages";
 import Image from "next/image";
 import {
@@ -7,17 +7,20 @@ import {
   projectsOrDefault,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
 export default async function ProjectsPage({
   params,
 }: {
   params: Promise<{ locale: LanguageCode }>;
 }) {
-  const t = await getTranslations("projects");
   const { locale } = await params;
+  setRequestLocale(locale);
   const isRtl = locale === "ar";
-  const projectsData = projectsOrDefault(await getPublishedProjects());
+  const [t, rows] = await Promise.all([
+    getTranslations("projects"),
+    getPublishedProjects(),
+  ]);
+  const projectsData = projectsOrDefault(rows);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16">

@@ -14,21 +14,10 @@ async function adminClient() {
   return supabase;
 }
 
+// Public pages are cached. Any content change clears every page (both
+// locales, all slugs, and the header/footer data in the shared layout).
 function revalidateSite() {
-  for (const locale of ["en", "ar"]) {
-    revalidatePath(`/${locale}`);
-    revalidatePath(`/${locale}/projects`);
-    revalidatePath(`/${locale}/about`);
-    revalidatePath(`/${locale}/branches`);
-    revalidatePath(`/${locale}/contact`);
-    revalidatePath(`/${locale}/insulating-materials`);
-    revalidatePath(`/${locale}/licenses`);
-  }
-  revalidatePath("/[locale]/insulating-materials/[slug]", "page");
-  revalidatePath("/[locale]/partners/[slug]", "page");
-  revalidatePath("/[locale]/partners/[slug]/products/[productSlug]", "page");
-  revalidatePath("/[locale]/partners/[slug]/solutions/[solutionSlug]", "page");
-  revalidatePath("/admin", "layout");
+  revalidatePath("/", "layout");
 }
 
 // A delete blocked by rows that still depend on it. Postgres reports "on delete

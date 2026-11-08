@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/products/product-detail";
 import {
@@ -9,7 +9,11 @@ import {
   localized,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
+
+// Rendered on first visit, then cached like the other pages.
+export async function generateStaticParams() {
+  return [];
+}
 
 type Props = {
   params: Promise<{ locale: string; slug: string; productSlug: string }>;
@@ -32,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PartnerProductPage({ params }: Props) {
   const { locale, slug, productSlug } = await params;
+  setRequestLocale(locale);
   const found = await load(slug, productSlug);
   if (!found) notFound();
   const { partner, product } = found;

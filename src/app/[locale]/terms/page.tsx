@@ -1,7 +1,12 @@
-import { getTranslations } from "next-intl/server";
-export const revalidate = 0;
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-export default async function TermsPage() {
+export default async function TermsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("termsOfUse");
 
   return (

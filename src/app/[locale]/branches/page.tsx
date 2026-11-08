@@ -1,5 +1,5 @@
 import { LanguageCode } from "@/i18n/languages";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import {
   branchesOrDefault,
@@ -7,19 +7,21 @@ import {
   localized,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
 interface Props {
   params: Promise<{
     locale: LanguageCode;
   }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function BranchesPage({ params, searchParams }: Props) {
-  const t = await getTranslations("branches");
+export default async function BranchesPage({ params }: Props) {
   const { locale } = await params;
-  const branches = branchesOrDefault(await getPublishedBranches());
+  setRequestLocale(locale);
+  const [t, rows] = await Promise.all([
+    getTranslations("branches"),
+    getPublishedBranches(),
+  ]);
+  const branches = branchesOrDefault(rows);
 
   return (
     <div className="min-h-screen bg-white">

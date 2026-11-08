@@ -1,8 +1,7 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DocumentLink } from "@/components/content/document-link";
 import { getPublishedLicenses, localized } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
 export default async function LicensesPage({
   params,
@@ -10,6 +9,7 @@ export default async function LicensesPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const [t, licenses] = await Promise.all([
     getTranslations("licenses"),
     getPublishedLicenses(),

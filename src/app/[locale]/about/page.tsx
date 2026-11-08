@@ -1,15 +1,21 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { DocumentSections } from "@/components/content/document-sections";
 import { getDocumentSections, getSiteMap, siteText } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
-export default async function AboutUsPage() {
-  const t = await getTranslations("about");
-  const locale = await getLocale();
-  const site = await getSiteMap();
-  const documents = await getDocumentSections({}, locale);
+export default async function AboutUsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const [t, site, documents] = await Promise.all([
+    getTranslations("about"),
+    getSiteMap(),
+    getDocumentSections({}, locale),
+  ]);
   const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
 
   return (

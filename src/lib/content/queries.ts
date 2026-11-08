@@ -1,4 +1,6 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import {
   defaultBranches,
   defaultProducts,
@@ -36,7 +38,7 @@ function asBlocks(value: unknown): ProductBlock[] {
 
 export async function getPublishedProjects(): Promise<ProjectRow[] | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("projects")
       .select("*")
@@ -51,7 +53,7 @@ export async function getPublishedProjects(): Promise<ProjectRow[] | null> {
 
 export async function getPublishedProducts(): Promise<ProductRow[] | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -70,7 +72,7 @@ export async function getPublishedProducts(): Promise<ProductRow[] | null> {
 
 export async function getProductBySlug(slug: string): Promise<ProductRow | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -87,9 +89,9 @@ export async function getProductBySlug(slug: string): Promise<ProductRow | null>
   }
 }
 
-export async function getPublishedBranches(): Promise<BranchRow[] | null> {
+async function fetchPublishedBranches(): Promise<BranchRow[] | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("branches")
       .select("*")
@@ -104,7 +106,7 @@ export async function getPublishedBranches(): Promise<BranchRow[] | null> {
 
 export async function getPublishedServices(): Promise<ServiceRow[] | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("services")
       .select("*")
@@ -119,7 +121,7 @@ export async function getPublishedServices(): Promise<ServiceRow[] | null> {
 
 export async function getPublishedPartners(): Promise<PartnerRow[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("partners")
       .select("*")
@@ -132,9 +134,9 @@ export async function getPublishedPartners(): Promise<PartnerRow[]> {
   }
 }
 
-export async function getPartnerBySlug(slug: string): Promise<PartnerRow | null> {
+async function fetchPartnerBySlug(slug: string): Promise<PartnerRow | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("partners")
       .select("*")
@@ -150,7 +152,7 @@ export async function getPartnerBySlug(slug: string): Promise<PartnerRow | null>
 
 export async function getPartnerProducts(partnerId: string): Promise<ProductRow[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -167,12 +169,12 @@ export async function getPartnerProducts(partnerId: string): Promise<ProductRow[
   }
 }
 
-export async function getPartnerProduct(
+async function fetchPartnerProduct(
   partnerId: string,
   slug: string,
 ): Promise<ProductRow | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -189,7 +191,7 @@ export async function getPartnerProduct(
 
 export async function getPartnerSections(partnerId: string): Promise<PartnerSectionRow[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("partner_sections")
       .select("*")
@@ -208,7 +210,7 @@ export async function getPartnerSections(partnerId: string): Promise<PartnerSect
 
 export async function getPartnerSolutions(partnerId: string): Promise<PartnerSolutionRow[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("partner_solutions")
       .select("*")
@@ -225,12 +227,12 @@ export async function getPartnerSolutions(partnerId: string): Promise<PartnerSol
   }
 }
 
-export async function getPartnerSolution(
+async function fetchPartnerSolution(
   partnerId: string,
   slug: string,
 ): Promise<PartnerSolutionRow | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from("partner_solutions")
       .select("*")
@@ -249,7 +251,8 @@ async function loadDocumentSections(
   owner: DocumentOwner,
   publishedOnly: boolean,
 ): Promise<DocumentSectionRow[]> {
-  const supabase = await createClient();
+  // The admin needs the logged-in client to see unpublished rows.
+  const supabase = publishedOnly ? createPublicClient() : await createClient();
   let query = supabase
     .from("document_sections")
     .select("*, documents(*)")
@@ -308,7 +311,7 @@ export async function getAdminDocumentSections(
 }
 
 async function loadLicenses(publishedOnly: boolean): Promise<LicenseRow[] | null> {
-  const supabase = await createClient();
+  const supabase = publishedOnly ? createPublicClient() : await createClient();
   let query = supabase.from("licenses").select("*").order("sort_order");
   if (publishedOnly) query = query.eq("published", true);
   const { data, error } = await query;
@@ -337,9 +340,9 @@ export async function getAdminLicenses(): Promise<LicenseRow[] | null> {
   }
 }
 
-export async function getSiteMap(): Promise<Record<string, SiteRow> | null> {
+async function fetchSiteMap(): Promise<Record<string, SiteRow> | null> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase.from("site_content").select("*");
     if (error) return null;
     const map: Record<string, SiteRow> = {};
@@ -409,3 +412,11 @@ export function branchesOrDefault(rows: BranchRow[] | null) {
 export function servicesOrDefault(rows: ServiceRow[] | null) {
   return rows ?? defaultServices;
 }
+
+// Deduplicated per request: the layout, generateMetadata and the page all ask
+// for some of these, and React's cache() turns that into one query each.
+export const getSiteMap = cache(fetchSiteMap);
+export const getPublishedBranches = cache(fetchPublishedBranches);
+export const getPartnerBySlug = cache(fetchPartnerBySlug);
+export const getPartnerProduct = cache(fetchPartnerProduct);
+export const getPartnerSolution = cache(fetchPartnerSolution);

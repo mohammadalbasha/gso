@@ -1,5 +1,6 @@
 import { LanguageCode } from "@/i18n/languages";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PartnerCard } from "@/components/partners/partner-card";
@@ -14,25 +15,26 @@ import {
   servicesOrDefault,
   siteText,
 } from "@/lib/content/queries";
+import {
+  PartnersSectionSkeleton,
+  ProductsSectionSkeleton,
+  ServicesSectionSkeleton,
+} from "@/components/shared/page-skeletons";
 
-export const revalidate = 0;
 
 interface Props {
   params: Promise<{
     locale: LanguageCode;
   }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function Home({ params, searchParams }: Props) {
-  const t = await getTranslations("home");
-  const tPartners = await getTranslations("partners");
+type SiteMap = Awaited<ReturnType<typeof getSiteMap>>;
+
+export default async function Home({ params }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
+  const [t, site] = await Promise.all([getTranslations("home"), getSiteMap()]);
   const isRtl = locale === "ar";
-  const site = await getSiteMap();
-  const products = productsOrDefault(await getPublishedProducts());
-  const services = servicesOrDefault(await getPublishedServices());
-  const partners = await getPublishedPartners();
   const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
   return (
     <div>
@@ -98,6 +100,26 @@ export default async function Home({ params, searchParams }: Props) {
         </div>
       </section>
 
+      {/* Each data section streams in on its own, behind a matching skeleton. */}
+      <Suspense fallback={<ServicesSectionSkeleton />}>
+        <ServicesSection locale={locale} site={site} />
+      </Suspense>
+      <Suspense fallback={<ProductsSectionSkeleton />}>
+        <ProductsSection locale={locale} />
+      </Suspense>
+      <Suspense fallback={<PartnersSectionSkeleton />}>
+        <PartnersSection locale={locale} site={site} />
+      </Suspense>
+    </div>
+  );
+}
+
+async function ServicesSection({ locale, site }: { locale: string; site: SiteMap }) {
+  const [t, rows] = await Promise.all([getTranslations("home"), getPublishedServices()]);
+  const services = servicesOrDefault(rows);
+  const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
+  return (
+    <>
       {/* Services Section */}
       {services.length > 0 ? (
         <section className="bg-primary-50 py-16">
@@ -148,6 +170,16 @@ export default async function Home({ params, searchParams }: Props) {
         </section>
       ) : null}
 
+    </>
+  );
+}
+
+async function ProductsSection({ locale }: { locale: string }) {
+  const [t, rows] = await Promise.all([getTranslations("home"), getPublishedProducts()]);
+  const products = productsOrDefault(rows);
+  const isRtl = locale === "ar";
+  return (
+    <>
       {/* Products Section */}
       <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
@@ -222,6 +254,18 @@ export default async function Home({ params, searchParams }: Props) {
         </div>
       </section>
 
+    </>
+  );
+}
+
+async function PartnersSection({ locale, site }: { locale: string; site: SiteMap }) {
+  const [tPartners, partners] = await Promise.all([
+    getTranslations("partners"),
+    getPublishedPartners(),
+  ]);
+  const text = (key: string, fallback: string) => siteText(site, key, locale, fallback);
+  return (
+    <>
       {/* Agencies Section */}
       {partners.length > 0 ? (
         <section className="bg-primary-50 py-16">
@@ -259,6 +303,6 @@ export default async function Home({ params, searchParams }: Props) {
           </div>
         </section>
       ) : null}
-    </div>
+    </>
   );
 }

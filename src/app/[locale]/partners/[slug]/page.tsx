@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BadgeCheck, Globe, Mail, Phone } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContentBlocks } from "@/components/content/content-blocks";
@@ -17,7 +17,11 @@ import {
   localized,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
+
+// Rendered on first visit, then cached like the other pages.
+export async function generateStaticParams() {
+  return [];
+}
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -37,6 +41,7 @@ function websiteHref(website: string) {
 
 export default async function PartnerPage({ params }: Props) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const partner = await getPartnerBySlug(slug);
   if (!partner) notFound();
 

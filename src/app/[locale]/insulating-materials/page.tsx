@@ -1,6 +1,6 @@
 import { LanguageCode } from "@/i18n/languages";
 import { cn } from "@/lib/utils/utils";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,23 +9,24 @@ import {
   productsOrDefault,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
 interface Props {
   params: Promise<{
     locale: LanguageCode;
   }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function InsulatingMaterialsPage({
   params,
-  searchParams,
 }: Props) {
-  const t = await getTranslations("insulatingMaterials");
   const { locale } = await params;
+  setRequestLocale(locale);
   const isRtl = locale === "ar";
-  const products = productsOrDefault(await getPublishedProducts());
+  const [t, rows] = await Promise.all([
+    getTranslations("insulatingMaterials"),
+    getPublishedProducts(),
+  ]);
+  const products = productsOrDefault(rows);
 
   return (
     <div className="min-h-screen bg-gray-200">

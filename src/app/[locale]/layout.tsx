@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/shared/header";
-import { Footer } from "@/components/shared/footer";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -11,13 +10,12 @@ import { getLangDir } from "rtl-detect";
 import { LanguageCode } from "@/i18n/languages";
 import { languages } from "@/i18n/languages";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
 import {
-  branchesOrDefault,
-  contactFromSite,
-  getPublishedBranches,
-  getSiteMap,
-  localized,
-} from "@/lib/content/queries";
+  SiteFooter,
+  SiteFooterSkeleton,
+  SiteHeader,
+} from "@/components/shared/site-chrome";
 
 import { AppContext } from "@/context/app.context";
 import { ScrollPositionProvider } from "@/context/scroll.context";
@@ -72,9 +70,13 @@ export async function generateMetadata({
   };
 }
 
-// export async function generateStaticParams() {
-//   return Object.keys(languages).map((locale) => ({ locale }));
-// }
+// Pages are cached and rebuilt when the admin saves (revalidatePath). This is
+// only a safety net for edits made outside the admin, e.g. in Supabase directly.
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return Object.keys(languages).map((locale) => ({ locale }));
+}
 
 export default async function RootLayout({
   children,
@@ -89,17 +91,6 @@ export default async function RootLayout({
   }
   setRequestLocale(locale);
   const direction = getLangDir(locale);
-  const site = await getSiteMap();
-  const { phones, email } = contactFromSite(site);
-  const branches = branchesOrDefault(await getPublishedBranches())
-    .filter((item) => !item.coming_soon)
-    .map((item) => ({
-      id: item.id,
-      name: localized(locale, item.name_en, item.name_ar),
-      address: localized(locale, item.address_en, item.address_ar),
-      phone: item.phone ?? "",
-      email: item.email ?? "",
-    }));
 
   return (
     <html lang={locale} dir={direction} className="h-full max-w-full ">
@@ -111,12 +102,17 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <AppContext>
             <ScrollPositionProvider>
-              <Header lang={locale} phone={phones[0]} />
+              {/* Renders straight away with the default phone, then swaps in the saved one. */}
+              <Suspense fallback={<Header lang={locale} />}>
+                <SiteHeader locale={locale} />
+              </Suspense>
 
               <main className="flex-1 flex flex-col   bg-secondary-200  overflow-x-hidden ">
                 {children}
               </main>
-              <Footer lang={locale} phones={phones} email={email} branches={branches} />
+              <Suspense fallback={<SiteFooterSkeleton />}>
+                <SiteFooter locale={locale} />
+              </Suspense>
 
               <Toaster />
             </ScrollPositionProvider>

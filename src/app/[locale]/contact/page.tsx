@@ -1,5 +1,5 @@
 import { LanguageCode } from "@/i18n/languages";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FaPhone, FaEnvelope, FaWhatsapp } from "react-icons/fa6";
 import Link from "next/link";
 
@@ -8,18 +8,16 @@ import {
   getSiteMap,
 } from "@/lib/content/queries";
 
-export const revalidate = 0;
 
 export default async function ContactPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: LanguageCode }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const t = await getTranslations("contact");
   const { locale } = await params;
-  const { phones, email } = contactFromSite(await getSiteMap());
+  setRequestLocale(locale);
+  const [t, site] = await Promise.all([getTranslations("contact"), getSiteMap()]);
+  const { phones, email } = contactFromSite(site);
 
   return (
     <div className="flex flex-col gap-10 w-full min-h-screen items-center py-16 px-6">
