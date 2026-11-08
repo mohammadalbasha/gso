@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { saveSiteContent } from "@/app/admin/(panel)/content-actions";
@@ -258,10 +258,9 @@ export function SiteForm({ rows }: { rows: SiteRow[] }) {
         <p className="text-sm text-gray-600">
           All sections are saved together.
         </p>
-        <Button type="submit">
-          <Save />
+        <SubmitButton icon={<Save />}>
           Save site text
-        </Button>
+        </SubmitButton>
       </div>
     </form>
   );

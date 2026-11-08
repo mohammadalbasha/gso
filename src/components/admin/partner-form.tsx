@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import { savePartner } from "@/app/admin/(panel)/content-actions";
 import type { PartnerRow } from "@/lib/content/types";
@@ -134,10 +134,9 @@ export function PartnerForm({ partner }: { partner?: PartnerRow }) {
         </div>
       </Card>
 
-      <Button type="submit" className="w-fit">
-        <Save />
+      <SubmitButton className="w-fit" icon={<Save />}>
         Save partner
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

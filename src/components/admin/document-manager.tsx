@@ -3,6 +3,7 @@
 import { ExternalLink, Pencil, Plus, Save, Upload } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import {
   createDocumentUpload,
@@ -162,10 +163,9 @@ function DocumentItem({ document }: { document: DocumentRow }) {
             sortOrder={document.sort_order}
             published={document.published}
           />
-          <Button type="submit" className="w-fit">
-            <Save />
+          <SubmitButton className="w-fit" icon={<Save />}>
             Save PDF
-          </Button>
+          </SubmitButton>
         </form>
       ) : null}
     </div>
@@ -221,10 +221,9 @@ function AddDocumentForm({ sectionId }: { sectionId: string }) {
       <LanguageSelect />
       <SortAndVisibility />
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
-      <Button type="submit" variant="outline" className="w-fit" disabled={busy}>
-        <Upload />
-        {busy ? "Uploading…" : "Upload PDF"}
-      </Button>
+      <SubmitButton variant="outline" className="w-fit" pending={busy} pendingLabel="Uploading…" icon={<Upload />}>
+        Upload PDF
+      </SubmitButton>
     </form>
   );
 }
@@ -292,10 +291,9 @@ function SectionItem({ section }: { section: DocumentSectionRow }) {
             sortOrder={section.sort_order}
             published={section.published}
           />
-          <Button type="submit" className="w-fit">
-            <Save />
+          <SubmitButton className="w-fit" icon={<Save />}>
             Save section
-          </Button>
+          </SubmitButton>
         </form>
       ) : null}
       {section.documents.map((document) => (
@@ -338,10 +336,9 @@ export function DocumentManager({
           <p className="text-sm font-semibold text-gray-900">Add a PDF section</p>
           <PairInput label="Section title" name="title" required />
           <SortAndVisibility />
-          <Button type="submit" variant="outline" className="w-fit">
-            <Plus />
+          <SubmitButton variant="outline" className="w-fit" pendingLabel="Adding…" icon={<Plus />}>
             Add section
-          </Button>
+          </SubmitButton>
         </form>
       </div>
     </Card>

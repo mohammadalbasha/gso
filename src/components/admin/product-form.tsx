@@ -2,7 +2,7 @@
 
 import { Save } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import { saveProduct } from "@/app/admin/(panel)/content-actions";
 import type { ProductRow } from "@/lib/content/types";
@@ -132,10 +132,9 @@ export function ProductForm({
           {product ? `Editing “${product.name_en}”` : "New product"} ·{" "}
           {count} section(s)
         </p>
-        <Button type="submit">
-          <Save />
+        <SubmitButton icon={<Save />}>
           Save product
-        </Button>
+        </SubmitButton>
       </div>
     </form>
   );

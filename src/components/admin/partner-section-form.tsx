@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import { savePartnerSection } from "@/app/admin/(panel)/content-actions";
 import type { PartnerSectionRow } from "@/lib/content/types";
@@ -73,10 +73,9 @@ export function PartnerSectionForm({
         noun="block"
       />
 
-      <Button type="submit" className="w-fit">
-        <Save />
+      <SubmitButton className="w-fit" icon={<Save />}>
         Save section
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

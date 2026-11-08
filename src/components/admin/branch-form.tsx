@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Field, PairFields } from "./fields";
 import { saveBranch } from "@/app/admin/(panel)/content-actions";
 import type { BranchRow } from "@/lib/content/types";
@@ -46,10 +46,9 @@ export function BranchForm({ branch }: { branch?: BranchRow }) {
         />
         Published
       </label>
-      <Button type="submit" className="w-fit">
-        <Save />
+      <SubmitButton className="w-fit" icon={<Save />}>
         Save branch
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Field, PairFields } from "./fields";
 import { ImageUpload } from "./image-upload";
 import { saveService } from "@/app/admin/(panel)/content-actions";
@@ -38,10 +38,9 @@ export function ServiceForm({ service }: { service?: ServiceRow }) {
         />
         Published
       </label>
-      <Button type="submit" className="w-fit">
-        <Save />
+      <SubmitButton className="w-fit" icon={<Save />}>
         Save service
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

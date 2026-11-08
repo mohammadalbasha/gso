@@ -3,6 +3,7 @@
 import { ExternalLink, Pencil, Save, Upload } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import {
   deleteLicense,
   saveLicense,
@@ -78,10 +79,9 @@ function LicenseItem({ license }: { license: LicenseRow }) {
             sortOrder={license.sort_order}
             published={license.published}
           />
-          <Button type="submit" className="w-fit">
-            <Save />
+          <SubmitButton className="w-fit" icon={<Save />}>
             Save license
-          </Button>
+          </SubmitButton>
         </form>
       ) : null}
     </div>
@@ -135,10 +135,9 @@ function AddLicenseForm() {
       </label>
       <SortAndVisibility />
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
-      <Button type="submit" variant="outline" className="w-fit" disabled={busy}>
-        <Upload />
-        {busy ? "Uploading…" : "Upload license"}
-      </Button>
+      <SubmitButton variant="outline" className="w-fit" pending={busy} pendingLabel="Uploading…" icon={<Upload />}>
+        Upload license
+      </SubmitButton>
     </form>
   );
 }

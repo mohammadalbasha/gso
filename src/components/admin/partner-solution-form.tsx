@@ -1,5 +1,5 @@
 import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/admin/submit-button";
 import { Input } from "@/components/ui/input";
 import { savePartnerSolution } from "@/app/admin/(panel)/content-actions";
 import type { PartnerSolutionRow } from "@/lib/content/types";
@@ -109,10 +109,9 @@ export function PartnerSolutionForm({
         noun="block"
       />
 
-      <Button type="submit" className="w-fit">
-        <Save />
+      <SubmitButton className="w-fit" icon={<Save />}>
         Save solution
-      </Button>
+      </SubmitButton>
     </form>
   );
 }
